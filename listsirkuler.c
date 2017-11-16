@@ -223,14 +223,14 @@ void DelP (List *L, Unit X)
 /* List mungkin menjadi kosong karena penghapusan */
 {
 	address P=First(*L);
-	if(IsSama(Info(P),X)){
+	if(IsUnitSama(Info(P),X)){
 		DelFirst(L, &P);
 	}
 	else if(Next(P)!=First(*L)){
-		while(IsSama(Info(Next(P)),X) && Next(P)!=First(*L)){
+		while(IsUnitSama(Info(Next(P)),X) && Next(P)!=First(*L)){
 			P = Next(P);
 		}
-		if(IsSama(Info(Next(P)),X))
+		if(IsUnitSama(Info(Next(P)),X))
 			Next(P) = Next(Next(P));
 	}
 }
@@ -261,7 +261,7 @@ void bacaunit(LIST *stdunit){
 	Unit Utemp;
 	STARTKATA(true);
 	while(!EOP){
-		if(!IsSama(CKata, EndUnit){
+		if(!IsKataSama(CKata, EndUnit){
 			switch(i){
 				case 1 : Utemp.type = CKata;
 						 break;
