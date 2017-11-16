@@ -19,7 +19,7 @@ typedef struct tElmtlist {
 typedef struct {
 	address First;
 } List;
-const Kata EndUnit("ENDUNIT" , 7);
+const Kata EndUnit = {"ENDUNIT" , 7};
 
 /* Definisi list : */
 /* List kosong : FirstList(L) = Nil */
