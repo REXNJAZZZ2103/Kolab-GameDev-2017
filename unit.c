@@ -60,7 +60,7 @@ void PrintUnit(Unit U){
 	printf(" | Health %d", U.currhealth);
 }
 
-boolean IsSama(Unit a, Unit b){
+boolean IsUnitSama(Unit a, Unit b){
 	if(NEQ(position(a), position(b))
 	   return false;
 	if(!IsSama(a.type, b.type))
