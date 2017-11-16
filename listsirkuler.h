@@ -17,7 +17,7 @@ typedef struct tElmtlist {
 	address next;
 } ElmtList;
 typedef struct {
-	address FirstList;
+	address First;
 } List;
 
 /* Definisi list : */
