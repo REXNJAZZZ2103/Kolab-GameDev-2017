@@ -3,7 +3,6 @@
 
 #include "point.h"
 #include "mesinkata.h"
-#include "listsirkuler.h"
 
 typedef struct{
 	Kata type;
@@ -34,8 +33,6 @@ typedef struct {
 #define position(X) (X).pos
 #define pemilik(X) (X).kepemilikan
 #define CC(X) (X).CC
-
-void bacaunit(LIST *stdunit);
 
 void PrintUnitRekrut(Unit U);
 
