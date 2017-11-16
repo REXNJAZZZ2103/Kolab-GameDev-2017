@@ -26,7 +26,7 @@ typedef struct {
 /* Elemen terakhir list: jika addressnya Last, maka Next(Last)=First(L) */
 
 /* Notasi Akses */
-#define Info(P) (P)->info
+#define InfoList(P) (P)->info
 #define Next(P) (P)->next
 #define First(L) ((L).First)
 
