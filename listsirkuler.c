@@ -45,7 +45,7 @@ void Dealokasi (address P)
 }
 
 /****************** PENCARIAN SEBUAH ELEMEN List ******************/
-address SearchPoint (List L, Point X)
+address SearchPoint (List L, POINT X)
 /* Mencari apakah ada elemen List dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
