@@ -52,10 +52,10 @@ address SearchPoint (List L, POINT X)
 {
 	address P;
 	P = FirstList(L);
-	while(NextList(P)!=FirstList(L) && !EQ(X,L.Unit.pos)){
+	while(NextList(P)!=FirstList(L) && !EQ(X,position(InfoList(P)))){
 		P = NextList(P);
 	}
-	if(EQ(X,L.Unit.pos))
+	if(EQ(X,position(InfoList(P))))
 		return P;
 	else
 		return Nil;
@@ -287,7 +287,7 @@ void bacaunit(List *stdunit){
 			if(i<8)
 				Utemp.heal = 0;
 			i=1;
-			Add(stdunit, Utemp);
+			InsVLast(stdunit, Utemp);
 		}
 		ADVKATA(true);
 	}
