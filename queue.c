@@ -65,7 +65,7 @@ void Add (Queue * Q, int X)
         Tail(*Q) = Nil;
     }
     Tail(*Q)++;
-    InfoTail(*Q) = X
+    InfoTail(*Q) = X;
 }
 void Del (Queue * Q, int * X)
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
@@ -84,7 +84,7 @@ void Del (Queue * Q, int * X)
 
 void Turn(Queue *Q)
 {
-    infotype X;
+    int X;
     Del(Q, &X);
     Add(Q, X);
 }
