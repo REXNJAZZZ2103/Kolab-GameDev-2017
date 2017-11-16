@@ -94,7 +94,7 @@ void DelVFirst (List *L, Unit * X)
 {
 	address P;
 	DelFirst(L, &P);
-	*X = Info(P);
+	*X = InfoList(P);
 }
 
 void DelVLast (List *L, Unit * X)
@@ -104,7 +104,7 @@ void DelVLast (List *L, Unit * X)
 {
 	address P;
 	DelLast(L, &P);
-	*X = Info(P);
+	*X = InfoList(P);
 }
 
 
@@ -223,14 +223,14 @@ void DelP (List *L, Unit X)
 /* List mungkin menjadi kosong karena penghapusan */
 {
 	address P=First(*L);
-	if(IsUnitSama(Info(P),X)){
+	if(IsUnitSama(InfoList(P),X)){
 		DelFirst(L, &P);
 	}
 	else if(Next(P)!=First(*L)){
-		while(IsUnitSama(Info(Next(P)),X) && Next(P)!=First(*L)){
+		while(IsUnitSama(InfoList(Next(P)),X) && Next(P)!=First(*L)){
 			P = Next(P);
 		}
-		if(IsUnitSama(Info(Next(P)),X))
+		if(IsUnitSama(InfoList(Next(P)),X))
 			Next(P) = Next(Next(P));
 	}
 }
