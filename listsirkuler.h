@@ -27,7 +27,7 @@ typedef struct {
 
 /* Notasi Akses */
 #define InfoList(P) (P)->info
-#define Next(P) (P)->next
+#define NextList(P) (P)->next
 #define First(L) ((L).First)
 
 /* PROTOTYPE */
