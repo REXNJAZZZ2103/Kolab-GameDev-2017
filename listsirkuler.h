@@ -17,18 +17,18 @@ typedef struct tElmtlist {
 	address next;
 } ElmtList;
 typedef struct {
-	address First;
+	address FirstList;
 } List;
 
 /* Definisi list : */
-/* List kosong : First(L) = Nil */
+/* List kosong : FirstList(L) = Nil */
 /* Setiap elemen dengan address P dapat diacu Info(P), Next(P) */
-/* Elemen terakhir list: jika addressnya Last, maka Next(Last)=First(L) */
+/* Elemen terakhir list: jika addressnya Last, maka Next(Last)=FirstList(L) */
 
 /* Notasi Akses */
 #define InfoList(P) (P)->info
 #define NextList(P) (P)->next
-#define First(L) ((L).First)
+#define FirstListList(L) ((L).FirstList)
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
@@ -59,7 +59,7 @@ address SearchPoint (List L, Unit X);
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void InsVFirst (List *L, Unit X);
+void InsVFirstList (List *L, Unit X);
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
@@ -70,7 +70,7 @@ void InsVLast (List *L, Unit X);
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
 /*** PENGHAPUSAN ELEMEN ***/
-void DelVFirst (List *L, Unit * X);
+void DelVFirstList (List *L, Unit * X);
 /* I.S. List L tidak kosong  */
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-dealokasi */
@@ -81,7 +81,7 @@ void DelVLast (List *L, Unit * X);
 
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
-void InsertFirst (List *L, address P);
+void InsertFirstList (List *L, address P);
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
 void InsertLast (List *L, address P);
@@ -93,11 +93,11 @@ void InsertAfter (List *L, address P, address Prec);
 /* F.S. Insert P sebagai elemen sesudah elemen beralamat Prec */
 
 /*** PENGHAPUSAN SEBUAH ELEMEN ***/
-void DelFirst (List *L, address *P);
+void DelFirstList (List *L, address *P);
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen pertama list sebelum penghapusan */
 /*      Elemen list berkurang satu (mungkin menjadi kosong) */
-/* First element yg baru adalah suksesor elemen pertama yang lama */
+/* FirstList element yg baru adalah suksesor elemen pertama yang lama */
 void DelLast (List *L, address *P);
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen terakhir list sebelum penghapusan  */
