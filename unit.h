@@ -43,6 +43,6 @@ void PrintMove(Unit U);
 
 void PrintUnit(Unit U);
 
-boolean IsSama(Unit a, Unit b);
+boolean IsUnitSama(Unit a, Unit b);
 
 #endif
