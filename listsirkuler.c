@@ -261,7 +261,7 @@ void bacaunit(List *stdunit){
 	Unit Utemp;
 	STARTKATA(true);
 	while(!EOP){
-		if(!IsKataSama(CKata, EndUnit){
+		if(!IsKataSama(CKata, EndUnit)){
 			switch(i){
 				case 1 : Utemp.type = CKata;
 						 break;
