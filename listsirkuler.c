@@ -30,7 +30,7 @@ address Alokasi (Unit X)
 {
 	address P = (address) malloc(sizeof(ElmtList));
 	if(P!=Nil){
-		Info(P) = X;
+		InfoList(P) = X;
 		Next(P) = Nil;
 	}
 	return P;
