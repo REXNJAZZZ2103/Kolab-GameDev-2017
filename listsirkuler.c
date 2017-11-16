@@ -8,7 +8,7 @@
 boolean IsEmpty (List L)
 /* Mengirim true jika list kosong. Lihat definisi di atas. */
 {
-	return First(L) == Nil;
+	return FirstList(L) == Nil;
 }
 
 
@@ -17,7 +17,7 @@ void CreateEmpty (List *L)
 /* I.S. L sembarang             */
 /* F.S. Terbentuk list kosong. Lihat definisi di atas. */
 {
-	First(*L) = Nil;
+	FirstList(*L) = Nil;
 }
 
 
@@ -25,13 +25,13 @@ void CreateEmpty (List *L)
 address Alokasi (Unit X)
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
-/* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
+/* menghasilkan P, maka Info(P)=X, NextList(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 {
 	address P = (address) malloc(sizeof(ElmtList));
 	if(P!=Nil){
 		InfoList(P) = X;
-		Next(P) = Nil;
+		NextList(P) = Nil;
 	}
 	return P;
 }
@@ -51,9 +51,9 @@ address SearchPoint (List L, Point X)
 /* Jika tidak ada, mengirimkan Nil */
 {
 	address P;
-	P = First(L);
-	while(Next(P)!=First(L) && !EQ(X,L.Unit.pos)){
-		P = Next(P);
+	P = FirstList(L);
+	while(NextList(P)!=FirstList(L) && !EQ(X,L.Unit.pos)){
+		P = NextList(P);
 	}
 	if(EQ(X,L.Unit.pos))
 		return P;
@@ -64,14 +64,14 @@ address SearchPoint (List L, Point X)
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void InsVFirst (List *L, Unit X)
+void InsVFirstList (List *L, Unit X)
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
 {
 	address P = Alokasi(X);
 	if(P!=Nil)
-		InsertFirst(L, P);
+		InsertFirstList(L, P);
 }
 
 void InsVLast (List *L, Unit X)
@@ -87,13 +87,13 @@ void InsVLast (List *L, Unit X)
 
 
 /*** PENGHAPUSAN ELEMEN ***/
-void DelVFirst (List *L, Unit * X)
+void DelVFirstList (List *L, Unit * X)
 /* I.S. List L tidak kosong  */
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada X */
 /*      dan alamat elemen pertama di-dealokasi */
 {
 	address P;
-	DelFirst(L, &P);
+	DelFirstList(L, &P);
 	*X = InfoList(P);
 }
 
@@ -110,22 +110,22 @@ void DelVLast (List *L, Unit * X)
 
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
-void InsertFirst (List *L, address P)
+void InsertFirstList (List *L, address P)
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
 {
-	address Q = First(*L);
+	address Q = FirstList(*L);
 	if(IsEmpty(*L)){
-		First(*L) = P;
-		Next(First(*L)) = First(*L);
+		FirstList(*L) = P;
+		NextList(FirstList(*L)) = FirstList(*L);
 	}
 	else{
-		while(Next(Q) != First(*L)){
-			Q = Next(Q);
+		while(NextList(Q) != FirstList(*L)){
+			Q = NextList(Q);
 		}
-		Next(P) = First(*L);
-		First(*L) = P;
-		Next(Q) = First(*L);
+		NextList(P) = FirstList(*L);
+		FirstList(*L) = P;
+		NextList(Q) = FirstList(*L);
 	}
 	
 }
@@ -134,17 +134,17 @@ void InsertLast (List *L, address P)
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
 {
-	address Q = First(*L);
+	address Q = FirstList(*L);
 	if(IsEmpty(*L)){
-		First(*L) = P;
-		Next(First(*L)) = First(*L);
+		FirstList(*L) = P;
+		NextList(FirstList(*L)) = FirstList(*L);
 	}
 	else{
-		while(Next(Q) != First(*L)){
-			Q = Next(Q);
+		while(NextList(Q) != FirstList(*L)){
+			Q = NextList(Q);
 		}
-		Next(Q) = P;
-		Next(P) = First(*L);
+		NextList(Q) = P;
+		NextList(P) = FirstList(*L);
 	}
 }
 
@@ -153,29 +153,29 @@ void InsertAfter (List *L, address P, address Prec)
 /*      P sudah dialokasi  */
 /* F.S. Insert P sebagai elemen sesudah elemen beralamat Prec */
 {
-	Next(P) = Next(Prec);
-	Next(Prec) = P;
+	NextList(P) = NextList(Prec);
+	NextList(Prec) = P;
 }
 
 
 /*** PENGHAPUSAN SEBUAH ELEMEN ***/
-void DelFirst (List *L, address *P)
+void DelFirstList (List *L, address *P)
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen pertama list sebelum penghapusan */
 /*      Elemen list berkurang satu (mungkin menjadi kosong) */
-/* First element yg baru adalah suksesor elemen pertama yang lama */
+/* FirstList element yg baru adalah suksesor elemen pertama yang lama */
 {
-	address Q = First(*L);
+	address Q = FirstList(*L);
 	*P = Q;
-	if(Next(Q) == First(*L)){
+	if(NextList(Q) == FirstList(*L)){
 		CreateEmpty(L);
 	}
 	else{
-		while(Next(Q) != First(*L)){
-			Q = Next(Q);
+		while(NextList(Q) != FirstList(*L)){
+			Q = NextList(Q);
 		}
-		First(*L) = Next(*P);
-		Next(Q) = First(*L);
+		FirstList(*L) = NextList(*P);
+		NextList(Q) = FirstList(*L);
 	}
 }
 
@@ -186,32 +186,32 @@ void DelLast (List *L, address *P)
 /* Last element baru adalah predesesor elemen pertama yg lama, */
 /* jika ada */
 {
-	address Q = First(*L);
+	address Q = FirstList(*L);
 	*P = Q;
-	if(Next(Q) == First(*L)){
+	if(NextList(Q) == FirstList(*L)){
 		CreateEmpty(L);
 	}
 	else{
-		while(Next(Next(Q)) != First(*L)){
-			Q = Next(Q);
+		while(NextList(NextList(Q)) != FirstList(*L)){
+			Q = NextList(Q);
 		}
-		*P = Next(Q);
-		Next(Q) = First(*L);
+		*P = NextList(Q);
+		NextList(Q) = FirstList(*L);
 	}
 }
 
 void DelAfter (List *L, address *Pdel, address Prec)
 /* I.S. List tidak kosong. Prec adalah anggota list  */
-/* F.S. Menghapus Next(Prec): */
+/* F.S. Menghapus NextList(Prec): */
 /*      Pdel adalah alamat elemen list yang dihapus  */
 {
-	*Pdel = Next(Prec);
-	if(Next(Prec) == First(*L)){
-		Next(Prec) = Next(First(*L));
-		First(*L) = Next(Prec);
+	*Pdel = NextList(Prec);
+	if(NextList(Prec) == FirstList(*L)){
+		NextList(Prec) = NextList(FirstList(*L));
+		FirstList(*L) = NextList(Prec);
 	}
 	else{
-		Next(Prec) = Next(*Pdel);
+		NextList(Prec) = NextList(*Pdel);
 	}
 }
 
@@ -222,16 +222,16 @@ void DelP (List *L, Unit X)
 /* Jika tidak ada elemen list dengan Info(P)=X, maka list tetap */
 /* List mungkin menjadi kosong karena penghapusan */
 {
-	address P=First(*L);
+	address P=FirstList(*L);
 	if(IsUnitSama(InfoList(P),X)){
-		DelFirst(L, &P);
+		DelFirstList(L, &P);
 	}
-	else if(Next(P)!=First(*L)){
-		while(IsUnitSama(InfoList(Next(P)),X) && Next(P)!=First(*L)){
-			P = Next(P);
+	else if(NextList(P)!=FirstList(*L)){
+		while(IsUnitSama(InfoList(NextList(P)),X) && NextList(P)!=FirstList(*L)){
+			P = NextList(P);
 		}
-		if(IsUnitSama(InfoList(Next(P)),X))
-			Next(P) = Next(Next(P));
+		if(IsUnitSama(InfoList(NextList(P)),X))
+			NextList(P) = NextList(NextList(P));
 	}
 }
 
@@ -244,12 +244,12 @@ void DelP (List *L, Unit X)
 // /* Jika list kosong : menulis [] */
 // /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
 // {
-	// address P = First(L);
+	// address P = FirstList(L);
 	// printf("[");
 	// if(P!=Nil){
-		// while(Next(P) != First(L)){
+		// while(NextList(P) != FirstList(L)){
 			// printf("%d,", Info(P));
-			// P = Next(P);
+			// P = NextList(P);
 		// }
 		// printf("%d", Info(P));
 	// }
