@@ -59,7 +59,7 @@ void SalinKata(boolean bacafile)
 }
 
 
-boolean IsSama(Kata K1, Kata K2){
+boolean IsKataSama(Kata K1, Kata K2){
 	int i;
 	for(i = 1;i<=K1.Length&&i<=K2.Length;i++){
 		if(K1.TabKata[i] != K2.TabKata[i])
