@@ -16,7 +16,7 @@ typedef struct{
 	int currmove;
 	int heal;
 	int cost;
-	Point pos;
+	POINT pos;
 } Unit;
 
 typedef struct {
