@@ -19,6 +19,7 @@ typedef struct tElmtlist {
 typedef struct {
 	address First;
 } List;
+const Kata EndUnit("ENDUNIT" , 7);
 
 /* Definisi list : */
 /* List kosong : FirstList(L) = Nil */
@@ -52,7 +53,7 @@ void Dealokasi (address P);
 /* Melakukan dealokasi/pengembalian address P */
 
 /****************** PENCARIAN SEBUAH ELEMEN List ******************/
-address SearchPoint (List L, Unit X);
+address SearchPoint (List L, POINT X);
 /* Mencari apakah ada elemen List dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
