@@ -63,7 +63,7 @@ void PrintUnit(Unit U){
 boolean IsUnitSama(Unit a, Unit b){
 	if(NEQ(position(a), position(b)))
 	   return false;
-	if(!IsSama(a.type, b.type))
+	if(!IsKataSama(a.type, b.type))
 	   	return false;
 	return true;
 }
