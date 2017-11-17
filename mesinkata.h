@@ -61,4 +61,6 @@ void PrintKata(Kata K);
 /* I.S. : K1 terdefinisi
    Proses : menulis ke layar kata K tanpa karakter tambahan lainnya */
 
+void InputString(Kata *K);
+
 #endif

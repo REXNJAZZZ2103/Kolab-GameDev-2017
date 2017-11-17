@@ -82,9 +82,4 @@ void Del (Queue * Q, int * X)
     }
 }
 
-void Turn(Queue *Q)
-{
-    int X;
-    Del(Q, &X);
-    Add(Q, X);
-}
+

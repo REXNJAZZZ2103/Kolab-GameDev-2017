@@ -1,10 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "boolean.h"
 #include "map.h"
+#include "player.h"
 
+int Baris, Kolom;
+Queue TurnPlayer;
 int pilihanawal;
+int PlayerTurn;
+
+const Kata recruit = {"RECRUIT", 7};
+const Kata change_unit = {"CHANGE_UNIT", 12};
+const Kata info = {"INF0", 4};
+const Kata attack = {"ATTACK", 6};
+const Kata map = {"MAP", 3};
+const Kata next_unit = {"NEXT_UNIT", 9};
 
 int main()
 {
@@ -15,8 +25,7 @@ int main()
 	scanf("%d", &pilihanawal);
 	if (pilihanawal == 1) {
 		//Persiapan baca file (ADT UNIT, PLAYER)
-		//Bikin Queue buat turn Player (ADT QUEUE)
-		int Baris, Kolom;
+
 		MATRIKS MAP;
 		printf("Masukkan Baris dan Kolom pada MAP : ");
 		scanf("%d %d", &Baris, &Kolom);
@@ -24,7 +33,7 @@ int main()
 		CreateMap(Baris, Kolom, &MAP);
 		PrintMap(Baris, Kolom, MAP);
 
-		//Create Player	(ADT PLAYER)	
+		MakeNewGame(2, &TurnPlayer);
 	} else if (pilihanawal == 2) {
 		
 	} else {
@@ -34,10 +43,14 @@ int main()
 	boolean Main = true;
 	boolean EndTurn = false;
 	while(Main) {
+		Turn(&TurnPlayer, &PlayerTurn);
+		printf("%d\n", PlayerTurn);
 		EndTurn = false;
-		//Bikin Turn Siapa masukkan dalam integer X (ADT QUEUE)
 		while(!EndTurn) {
-			// char *pilihan;
+			Kata pilihan;
+			getchar();
+			InputString(&pilihan);
+			PrintKata(pilihan);
 			//PrintPlayer(X) (ADT PLAYER)
 			//PrintSelectedUnit
 			// if (pilihan != "EndTurn") {

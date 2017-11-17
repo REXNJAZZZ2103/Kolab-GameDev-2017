@@ -89,4 +89,20 @@ void PrintKata(Kata K){
 	int i;
 	for(i=1;i<=K.Length;i++)
 		printf("%c",K.TabKata[i]);
+	printf("\n");	
+}
+
+void InputString(Kata *K) {
+	int i = 1;
+	char c;
+
+	scanf("%c", &c);
+
+	while(c != '\n') {
+		(*K).TabKata[i] = c;
+		i++;
+		scanf("%c", &c);
+	}
+	i--;
+	(*K).Length = i;
 }
