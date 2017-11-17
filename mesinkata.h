@@ -9,7 +9,7 @@
 
 #define NKMax 50
 #define BLANK ' '
-#define NEWLINE '\n'
+#define NEWLINE 13
 
 typedef struct {
 	char TabKata[NKMax+1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */
@@ -62,5 +62,7 @@ void PrintKata(Kata K);
    Proses : menulis ke layar kata K tanpa karakter tambahan lainnya */
 
 void InputString(Kata *K);
+
+void STARTKATA(boolean bacafile);
 
 #endif

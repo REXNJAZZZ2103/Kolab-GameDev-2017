@@ -1,15 +1,15 @@
-#include "map.h"
+#include "listsirkuler.h"
+#include "unit.h"
 #include <stdio.h>
 
 int main()
 {
-	int n, m;
-	MATRIKS MAP;
+	List ListUnit;
+	int i;
 
-	scanf("%d %d", &n, &m);
-	
-	convertIndex(&n, &m);
+	CreateEmpty(&ListUnit);
 
-	CreateMap(n, m, &MAP);
-	PrintMap(n, m, MAP);
+	bacaunit(&ListUnit);
+
+	PrintUnitRekrut(InfoList(FirstList(ListUnit)));
 }

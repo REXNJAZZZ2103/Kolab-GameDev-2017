@@ -6,6 +6,7 @@
 #define POINT_H
 
 #include "boolean.h"
+#include <stdlib.h>
 
 typedef struct { 
 	int X; /* absis   */
@@ -46,7 +47,7 @@ POINT PlusDelta (POINT P, int deltaX, int deltaY);
 /* Mengirim salinan P yang absisnya adalah Absis(P) + deltaX dan ordinatnya adalah Ordinat(P) + deltaY */
 int Panjang (POINT P1, POINT P2);
 /* Menghitung jarak antara 2 titik yaitu tiik P1 dan titik P2 */
-void Geser (POINT *P, float deltaX, float deltaY);
+void Geser (POINT *P, int deltaX, int deltaY);
 /* I.S. P terdefinisi */
 /* F.S. P digeser, absisnya sebesar deltaX dan ordinatnya sebesar deltaY */
 

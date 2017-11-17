@@ -3,7 +3,7 @@
 
 void PrintUnitRekrut(Unit U){
 	PrintKata(U.type);
-	printf(" | Health %d | ATK %d | DEF %d | %dG", U.maxhealth, U.atkdmg, U.cost);
+	printf(" | Health %d | ATK %d | %dG", U.maxhealth, U.atkdmg,U.cost);
 }
 
 

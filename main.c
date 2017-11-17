@@ -9,15 +9,12 @@ Queue TurnPlayer;
 int pilihanawal;
 int PlayerTurn;
 
-const Kata Move("MOVE", 4);
-const Kata Undo("UNDO", 4);
-const Kata Change_Unit("CHANGE_UNIT", 11);
-const Kata Recruit("RECRUIT", 7);
-const Kata Map("MAP", 3);
-const Kata Info("INFO", 4);
-const Kata End_Turn("END_TURN", 8);
-const Kata Save("SAVE", 4);
-const Kata Exit("EXIT", 4);
+const Kata recruit = {" RECRUIT", 7};
+const Kata change_unit = {" CHANGE_UNIT", 12};
+const Kata info = {" INF0", 4};
+const Kata attack = {" ATTACK", 6};
+const Kata map = {" MAP", 3};
+const Kata next_unit = {" NEXT_UNIT", 9};
 
 int main()
 {

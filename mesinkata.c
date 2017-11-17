@@ -89,7 +89,6 @@ void PrintKata(Kata K){
 	int i;
 	for(i=1;i<=K.Length;i++)
 		printf("%c",K.TabKata[i]);
-	printf("\n");	
 }
 
 void InputString(Kata *K) {

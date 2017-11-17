@@ -1,7 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "boolean.h"
 #include "listsirkuler.h"
+
+const Kata EndUnit = {" ENDUNIT" , 7};
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
@@ -281,8 +282,7 @@ void bacaunit(List *stdunit){
 						 break;
 			}
 			i++;
-		}
-		else{
+		} else{
 			Utemp.canatk = true;
 			if(i<8)
 				Utemp.heal = 0;

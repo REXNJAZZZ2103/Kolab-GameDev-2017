@@ -11,7 +11,7 @@ static FILE * pita;
 static int retval;
 
 void STARTFILE() {
-	pita = fopen("pitakar.txt","r");
+	pita = fopen("Unit.txt","r");
 	ADVFILE();
 }
 
