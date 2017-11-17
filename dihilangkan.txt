@@ -1,0 +1,7 @@
+
+const Kata recruit = {"RECRUIT", 7};
+const Kata change_unit = {"CHANGE_UNIT", 12};
+const Kata info = {"INF0", 4};
+const Kata attack = {"ATTACK", 6};
+const Kata map = {"MAP", 3};
+const Kata next_unit = {"NEXT_UNIT", 9};

@@ -20,19 +20,11 @@ typedef struct {
 extern boolean EndKata;
 extern Kata CKata;
 
-const Kata recruit = {"RECRUIT", 7};
-const Kata change_unit = {"CHANGE_UNIT", 12};
-const Kata info = {"INF0", 4};
-const Kata attack = {"ATTACK", 6};
-const Kata map = {"MAP", 3};
-const Kata next_unit = {"NEXT_UNIT", 9};
-
 void IgnoreBlank(boolean bacafile);
 /* Mengabaikan satu atau beberapa BLANK
    I.S. : CC sembarang 
    F.S. : CC ≠ BLANK atau CC = MARK */
 
-void STARTKATA(boolean bacafile);
 /* I.S. : CC sembarang 
    F.S. : EndKata = true, dan CC = MARK; 
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,

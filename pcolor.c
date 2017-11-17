@@ -42,7 +42,7 @@ void print_char(CharUnit X) {
     if (X.kepemilikan == 1) {
         printf("%s%c", RED, X.CC);
         printf("%s", NORMAL);
-    } else if (X,kepemilikan == 2) {
+    } else if (X.kepemilikan == 2) {
         printf("%s%c", GREEN, X.CC);
         printf("%s", NORMAL);
     } else if (X.kepemilikan == 3) {
