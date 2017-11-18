@@ -1,24 +1,10 @@
-/* File : stackcoin.c */
-/* deklarasi stack yang diimplementasi dengan tabel kontigu dan ukuran sama */
-/* TOP adalah alamat elemen puncak */
-/* Implementasi dalam bahasa C dengan alokasi statik */
-#include "boolean.h"
-#include "point.h"
-
-#define Nil 0
-#define MaxEl 100
-/* Nil adalah stack dengan elemen kosong . */
-/* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
+#include "stackpoint.h"
 
 //typedef int infotype;
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
-typedef struct {
-	POINT T[101]; /* tabel penyimpan elemen */
-	int TOP;  /* alamat TOP: elemen puncak */
-} Stack;
-/* Definisi stack S kosong : S.TOP = Nil */
-/* Elemen yang dipakai menyimpan nilai Stack T[1]..T[MaxEl] */
+/* Definisi stack S kosong : S.TOP = 0 */
+/* Elemen yang dipakai menyimpan 0ai Stack T[1]..T[100] */
 /* Jika S adalah Stack maka akses elemen : */
    /* S.T[(S.TOP)] untuk mengakses elemen TOP */
    /* S.TOP adalah alamat elemen TOP */
@@ -31,23 +17,23 @@ typedef struct {
 /* *** Konstruktor/Kreator *** */
 void CreateEmptyStack (Stack *S)
 /* I.S. sembarang; */
-/* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
-/* jadi indeksnya antara 1.. MaxEl+1 karena 0 tidak dipakai */
-/* Ciri stack kosong : TOP bernilai Nil */
+/* F.S. Membuat sebuah stack S yang kosong berkapasitas 100 */
+/* jadi indeksnya antara 1.. 100+1 karena 0 tidak dipakai */
+/* Ciri stack kosong : TOP ber0ai 0 */
 {
-	Top(*S) = Nil;
+	Top(*S) = 0;
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
 boolean IsEmptyStack (Stack S)
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
 {
-	return Top(S) == Nil;
+	return Top(S) == 0;
 }
 boolean IsFullStack (Stack S)
-/* Mengirim true jika tabel penampung nilai elemen stack penuh */
+/* Mengirim true jika tabel penampung 0ai elemen stack penuh */
 {
-	return Top(S) == MaxEl;
+	return Top(S) == 100;
 }
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
@@ -65,7 +51,7 @@ void Push (Stack * S, POINT P)
 void Pop (Stack * S, POINT * P)
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
-/* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
+/* F.S. X adalah 0ai elemen TOP yang lama, TOP berkurang 1 */
 {
 	(*P).X = InfoTop(*S).X;
 	(*P).Y = InfoTop(*S).Y;

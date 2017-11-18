@@ -43,11 +43,14 @@ void print_char(CharUnit X) {
         printf("%s%c", RED, X.CC);
         printf("%s", NORMAL);
     } else if (X.kepemilikan == 2) {
-        printf("%s%c", GREEN, X.CC);
+        printf("%s%c", BLUE, X.CC);
         printf("%s", NORMAL);
     } else if (X.kepemilikan == 3) {
         printf("%c", X.CC);
     } else if (X.CC == ' ') {
         printf(" ");
+    } else if (X.kepemilikan == 4) {
+        printf("%s%c", GREEN, X.CC);
+        printf("%s", NORMAL);
     }
 }

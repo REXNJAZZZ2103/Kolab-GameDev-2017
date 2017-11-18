@@ -4,6 +4,7 @@
 #include "map.h"
 #include "player.h"
 #include "listsirkuler.h"
+#include "stackpoint.h"
 
 int Baris, Kolom, BarisR, KolomR;
 Queue TurnPlayer;
@@ -16,6 +17,7 @@ int PlayerKe = 1;
 List ListUnitAwal;
 List ListUnitPlayer1;
 List ListUnitPlayer2;
+Stack MoveUndo;
 
 const Kata Recruit = {" RECRUIT", 7};
 const Kata Change_Unit = {" CHANGE_UNIT", 12};
@@ -26,7 +28,7 @@ const Kata Next_Unit = {" NEXT_UNIT", 9};
 const Kata Kosong = {" ", 0};
 const Kata Move = {" MOVE", 4};
 const Kata Undo = {" UNDO", 4};
-const Kata EndT = {" EndTurn", 7};
+const Kata EndT = {" ENDTURN", 7};
 MATRIKS MAPASLI;
 MATRIKS MAPCOPY;
 
@@ -49,14 +51,16 @@ int main()
 
 		bacaunit(&ListUnitAwal);
 		CreateEmptyList(&ListUnitPlayer1);
-		InsertFirstList(&ListUnitPlayer1, FirstList(ListUnitAwal));
-		InfoList(FirstList(ListUnitPlayer1)).pos.X = 2;
-		InfoList(FirstList(ListUnitPlayer1)).pos.Y = KolomR-1;
-		CreateEmptyList(&ListUnitPlayer2);
-		InsertFirstList(&ListUnitPlayer2, FirstList(ListUnitAwal));
-		InfoList(FirstList(ListUnitPlayer2)).pos.X = BarisR-1;
-		InfoList(FirstList(ListUnitPlayer2)).pos.Y = 2;
+		InsVFirstList(&ListUnitPlayer1, InfoList(FirstList(ListUnitAwal)));
+		InfoList(FirstList(ListUnitPlayer1)).pos.X = BarisR-1;
+		InfoList(FirstList(ListUnitPlayer1)).pos.Y = 2;
 
+		CreateEmptyList(&ListUnitPlayer2);
+		InsVFirstList(&ListUnitPlayer2, InfoList(FirstList(ListUnitAwal)));
+		InfoList(FirstList(ListUnitPlayer2)).pos.X = 2;
+		InfoList(FirstList(ListUnitPlayer2)).pos.Y = KolomR - 1;
+
+		CreateEmptyStack(&MoveUndo);
 	} else if (pilihanawal == 2) {
 		
 	} else {
@@ -66,56 +70,78 @@ int main()
 	boolean Main = true;
 	boolean EndTurn = false;
 	while(Main) {
-		SelectedUnit1 = InfoList(FirstList(ListUnitPlayer1));
-		SelectedUnit2 = InfoList(FirstList(ListUnitPlayer2));
 		EndTurn = false;
 		BacaPlayer(&PlayerTurn);
 		Del(&PlayerTurn, &SelectedPlayer);
+		SelectedUnit1 = InfoList(FirstList(ListUnitPlayer1));
+		SelectedUnit2 = InfoList(FirstList(ListUnitPlayer2));
+		
 		while(!EndTurn) {
-			SelectedUnit1 = InfoList(FirstList(ListUnitPlayer1));
-			SelectedUnit2 = InfoList(FirstList(ListUnitPlayer2));
 			PrintPlayer(PlayerKe, SelectedPlayer);
+			
+			POINT PSelected;
+			
 			if (PlayerKe == 1) {
 				PrintMove(SelectedUnit1);
+				PSelected = AksesMatriksUnit(SelectedUnit1.pos.X, SelectedUnit1.pos.Y);
 			} else {
 				PrintMove(SelectedUnit2);
+				PSelected = AksesMatriksUnit(SelectedUnit2.pos.X, SelectedUnit2.pos.Y);
 			}
+			
+			Elmt(MAPASLI, PSelected.X, PSelected.Y).kepemilikan = 4;
 			printf("\n");
+			
 			Kata pilihan;
 			printf("Your Input : ");
 			STARTKATA(false, Kosong);
 			pilihan = CKata;
+			
 			if (!IsKataSama(pilihan, EndT)) {
 				if (IsKataSama(pilihan, Move)) {
 					if (PlayerKe == 1) {
 						CopyMap(MAPASLI, &MAPCOPY);
 						UpdateMoveMAP(&MAPCOPY, SelectedUnit1, 1);
+						
 						int TujuanX, TujuanY;
 						POINT PTujuan, PAsal;
+						
 						PrintMap(Baris, Kolom, MAPCOPY);
 						printf("Please enter cell's coordinate x y :");
 						scanf("%d %d", &TujuanX, &TujuanY);
 						PTujuan = AksesMatriksUnit(TujuanX, TujuanY);
 						PAsal = AksesMatriksUnit(SelectedUnit1.pos.X, SelectedUnit1.pos.Y);
+						
 						while(Elmt(MAPCOPY, PTujuan.X, PTujuan.Y).CC != '?') {
 							printf("You can't move there\n");
 							printf("Please enter cell's coordinate x y :");
 							scanf("%d %d", &TujuanX, &TujuanY);
 							PTujuan = AksesMatriksUnit(TujuanX, TujuanY);
 						}
+							
 						Elmt(MAPASLI, PTujuan.X, PTujuan.Y).CC = SelectedUnit1.simbol;
 						Elmt(MAPASLI, PTujuan.X, PTujuan.Y).kepemilikan = PlayerKe;
 						Elmt(MAPASLI, PAsal.X, PAsal.Y).CC = ' ';
 						Elmt(MAPASLI, PAsal.X, PAsal.Y).kepemilikan = 3;
+						
 						PTujuan.X = TujuanX;
 						PTujuan.Y = TujuanY;
+						
+						Push(&MoveUndo, PAsal);
+
 						UpdateListMove(&ListUnitPlayer1, &SelectedUnit1, PTujuan);						
 					}
 				} else if (IsKataSama(pilihan, Map)) {
 					PrintMap(Baris, Kolom, MAPASLI);
 				}
 			} else {
-
+				if (PlayerKe == 1) {
+					Elmt(MAPASLI, PSelected.X, PSelected.Y).kepemilikan = 1;
+					PlayerKe = 2;
+				} else {
+					Elmt(MAPASLI, PSelected.X, PSelected.Y).kepemilikan = 2;
+					PlayerKe = 1;
+				}
 			}
 			// if (!IsKataSama(pilihan, EndT)) {
 			// 	if (IsKataSama(pilihan, Move)) {
