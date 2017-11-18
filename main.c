@@ -24,8 +24,8 @@ const Kata Attack = {" ATTACK", 6};
 const Kata Map = {" MAP", 3};
 const Kata Next_Unit = {" NEXT_UNIT", 9};
 const Kata Kosong = {" ", 0};
-const Kata Move = {" Move", 4};
-const Kata Undo = {" Undo", 4};
+const Kata Move = {" MOVE", 4};
+const Kata Undo = {" UNDO", 4};
 const Kata EndT = {" EndTurn", 7};
 MATRIKS MAPASLI;
 MATRIKS MAPCOPY;
@@ -72,6 +72,8 @@ int main()
 		BacaPlayer(&PlayerTurn);
 		Del(&PlayerTurn, &SelectedPlayer);
 		while(!EndTurn) {
+			SelectedUnit1 = InfoList(FirstList(ListUnitPlayer1));
+			SelectedUnit2 = InfoList(FirstList(ListUnitPlayer2));
 			PrintPlayer(PlayerKe, SelectedPlayer);
 			if (PlayerKe == 1) {
 				PrintMove(SelectedUnit1);
@@ -109,10 +111,9 @@ int main()
 						PTujuan.Y = TujuanY;
 						UpdateListMove(&ListUnitPlayer1, &SelectedUnit1, PTujuan);						
 					}
-
+				} else if (IsKataSama(pilihan, Map)) {
+					PrintMap(Baris, Kolom, MAPASLI);
 				}
-				int ss;
-				scanf("%d", &ss);
 			} else {
 
 			}
