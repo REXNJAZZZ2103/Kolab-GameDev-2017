@@ -1,6 +1,4 @@
 #include "mesinkata.h"
-#include "listsirkuler.h"
-#include "queue.h"
 #include "listvillage.h"
 
 #ifndef player_H
