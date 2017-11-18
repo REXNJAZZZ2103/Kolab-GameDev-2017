@@ -8,6 +8,7 @@ void PrintUnitRekrut(Unit U){
 
 
 void PrintMove(Unit U){
+	printf("Unit : ");
 	PrintKata(U.type);
 	TulisPOINT(U.pos);
 	printf(" | Movement Point : %d | Can Attack : ", U.currmove);

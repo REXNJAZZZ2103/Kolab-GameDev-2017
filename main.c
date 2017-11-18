@@ -5,7 +5,7 @@
 #include "player.h"
 #include "listsirkuler.h"
 
-int Baris, Kolom;
+int Baris, Kolom, BarisR, KolomR;
 Queue TurnPlayer;
 int pilihanawal;
 Queue PlayerTurn;
@@ -36,15 +36,24 @@ int main()
 	printf("Masukkan pilihan : ");
 	scanf("%d", &pilihanawal);
 	if (pilihanawal == 1) {
-		bacaunit(&ListUnitAwal);
 		MATRIKS MAP;
 		printf("Masukkan Baris dan Kolom pada MAP : ");
 		scanf("%d %d", &Baris, &Kolom);
+		BarisR = Baris, KolomR = Kolom;
 		convertIndex(&Baris, &Kolom);
 		CreateMap(Baris, Kolom, &MAP);
 		PrintMap(Baris, Kolom, MAP);
-		RecruitMap(Baris, Kolom, &MAP, 1);
-		PrintMap(Baris, Kolom, MAP);
+
+		bacaunit(&ListUnitAwal);
+		CreateEmptyList(&ListUnitPlayer1);
+		InsertFirstList(&ListUnitPlayer1, FirstList(ListUnitAwal));
+		InfoList(FirstList(ListUnitPlayer1)).pos.X = 2;
+		InfoList(FirstList(ListUnitPlayer1)).pos.Y = KolomR-1;
+		CreateEmptyList(&ListUnitPlayer2);
+		InsertFirstList(&ListUnitPlayer2, FirstList(ListUnitAwal));
+		InfoList(FirstList(ListUnitPlayer2)).pos.X = BarisR-1;
+		InfoList(FirstList(ListUnitPlayer2)).pos.Y = 2;
+
 	} else if (pilihanawal == 2) {
 		
 	} else {
@@ -54,15 +63,21 @@ int main()
 	boolean Main = true;
 	boolean EndTurn = false;
 	while(Main) {
+		SelectedUnit1 = InfoList(FirstList(ListUnitPlayer1));
+		SelectedUnit2 = InfoList(FirstList(ListUnitPlayer2));
 		EndTurn = false;
+		BacaPlayer(&PlayerTurn);
+		Del(&PlayerTurn, &SelectedPlayer);
 		while(!EndTurn) {
-			// PrintPlayer(x, SelectedPlayer);
-			// printf("\n");
-			// if (x == 1) {
-			// 	PrintMove(SelectedUnit1);
-			// } else {
-			// 	PrintMove(SelectedUnit2);
-			// }
+			PrintPlayer(x, SelectedPlayer);
+			if (x == 1) {
+				PrintMove(SelectedUnit1);
+			} else {
+				PrintMove(SelectedUnit2);
+			}
+			printf("\n");
+			int ss;
+			scanf("%d\n", &ss);
 			// printf("\n");
 			// Kata pilihan;
 			// STARTKATA(false, Kosong);

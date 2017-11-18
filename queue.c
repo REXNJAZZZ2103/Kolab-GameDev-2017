@@ -6,21 +6,21 @@ const Kata FPlayer = {" Player.txt", 10};
 const Kata ENDPLAYER = {" EndPlayer", 9};
 
 /* ********* Prototype ********* */
-boolean IsEmpty (Queue Q)
+boolean IsEmptyQueue (Queue Q)
 /* Mengirim true jika Q kosong: lihat definisi di atas */
 {
     return ((Head(Q) == 0) && (Tail(Q) == 0));
 }
-boolean IsFull (Queue Q)
+boolean IsFullQueue (Queue Q)
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak MaxEl */
 {
     return ((Head(Q) == 1) && (Tail(Q) == MaxEl(Q)));
 }
-int NBElmt (Queue Q)
+int NBElmtQueue (Queue Q)
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 {
-    if (IsEmpty(Q)) {
+    if (IsEmptyQueue(Q)) {
         return 0;
     } else if (Head(Q)>Tail(Q)) {
         return ((MaxEl(Q)-Head(Q)) + 1 + Tail(Q));
@@ -60,7 +60,7 @@ void Add (Queue * Q, Player X)
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer */
 {
-    if (IsEmpty(*Q)) {
+    if (IsEmptyQueue(*Q)) {
         Head(*Q) = 1;
     }
     else if (Tail(*Q) == MaxEl(*Q)) {

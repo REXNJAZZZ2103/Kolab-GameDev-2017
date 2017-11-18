@@ -11,7 +11,7 @@
 /* Definisi elemen dan address */
 /* Contoh deklarasi variabel bertype Queue : */
 /* Versi I : tabel dinamik, Head dan Tail eksplisit, ukuran disimpan */
-typedef struct { 
+typedef struct {
 	Player *T;   /* tabel penyimpan elemen */
     int HEAD;  /* alamat penghapusan */
    	int TAIL;  /* alamat penambahan */
@@ -28,12 +28,12 @@ typedef struct {
 #define InfoTail(Q) (Q).T[(Q).TAIL]
 #define MaxEl(Q) (Q).MaxEl
 /* ********* Prototype ********* */
-boolean IsEmpty (Queue Q);
+boolean IsEmptyQueue (Queue Q);
 /* Mengirim true jika Q kosong: lihat definisi di atas */
-boolean IsFull (Queue Q);
+boolean IsFullQueue (Queue Q);
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak MaxEl */
-int NBElmt (Queue Q);
+int NBElmtQueue (Queue Q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 
 /* *** Kreator *** */

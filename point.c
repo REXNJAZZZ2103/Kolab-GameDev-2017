@@ -24,7 +24,7 @@ void TulisPOINT (POINT P)
 /* I.S. P terdefinisi */
 /* F.S. P tertulis di layar dengan format "(X,Y)" */                
 {	//Algoritma
-	printf("(%d,%d)\n",Absis(P),Ordinat(P));
+	printf("(%d,%d)",Absis(P),Ordinat(P));
 }
 
 /* *** Kelompok operasi relasional terhadap POINT *** */
