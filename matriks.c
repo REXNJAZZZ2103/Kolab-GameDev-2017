@@ -2,21 +2,6 @@
 #include "matriks.h"
 #include <stdio.h>
 
-/* Ukuran minimum dan maksimum baris dan kolom */
-#define BrsMin 1
-#define BrsMax 100
-#define KolMin 1
-#define KolMax 100
-
-/* *** Selektor *** */
-#define NBrsEff(M) (M).NBrsEff
-#define NKolEff(M) (M).NKolEff
-#define Elmt(M,i,j) (M).Mem[(i)][(j)]
-
-/* NBrsEff <= 1 dan NKolEff <= 1 */
-/* Indeks matriks yang digunakan: [BrsMin..BrsMax][KolMin..KolMax] */
-/* Memori matriks yang dipakai selalu di "ujung kiri atas" */
-
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
 /* *** Konstruktor membentuk MATRIKS *** */
 void MakeMATRIKS (int NB, int NK, MATRIKS *M)

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "queue.h"
-#include "player.h"
 
 /* ********* Prototype ********* */
 boolean IsEmpty (Queue Q)
@@ -27,24 +26,24 @@ int NBElmt (Queue Q)
     }
 }
 /* *** Kreator *** */
-void CreateEmpty (Queue * Q, int Max)
+void CreateEmptyQueue (Queue * Q, int Max)
 /* I.S. sembarang */
 /* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
 /* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max+1 */
 /* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 {
-    (*Q).T = (int *) malloc ((Max+1) * sizeof(int));
+    (*Q).T = (Player *) malloc ((Max+1) * sizeof(Player));
     if ((*Q).T != NULL) {
         MaxEl(*Q) = Max;
-        Head(*Q) = Nil;
-        Tail(*Q) = Nil;
+        Head(*Q) = 0;
+        Tail(*Q) = 0;
     } else /* alokasi gagal */ {
         MaxEl(*Q) = 0;
     }
 }
 /* *** Destruktor *** */
-void DeAlokasi(Queue * Q)
+void DeAlokasiQueue (Queue * Q)
 /* Proses: Mengembalikan memori Q */
 /* I.S. Q pernah dialokasi */
 /* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
@@ -53,7 +52,7 @@ void DeAlokasi(Queue * Q)
     free((*Q).T);
 }
 /* *** Primitif Add/Delete *** */
-void Add (Queue * Q, int X)
+void Add (Queue * Q, Player X)
 /* Proses: Menambahkan X pada Q dengan aturan FIFO */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer */
@@ -62,24 +61,41 @@ void Add (Queue * Q, int X)
         Head(*Q) = 1;
     }
     else if (Tail(*Q) == MaxEl(*Q)) {
-        Tail(*Q) = Nil;
+        Tail(*Q) = 0;
     }
     Tail(*Q)++;
-    InfoTail(*Q) = X;
+    Name(InfoTail(*Q)) = Name(X);
+    Gold(InfoTail(*Q)) = Gold(X);
+    Income(InfoTail(*Q)) = Income(X);
+    Upkeep(InfoTail(*Q)) = Upkeep(X);
 }
-void Del (Queue * Q, int * X)
+
+void Del (Queue * Q, Player * X)
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
-/* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
+/* F.S. X = 0ai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
         Q mungkin kosong */
 {
-    *X = InfoHead(*Q);
+    Name(*X) = Name(InfoHead(*Q));
+    Gold(*X) = Gold(InfoHead(*Q));
+    Income(*X) = Income(InfoHead(*Q));
+    Upkeep(*X) = Upkeep(InfoHead(*Q));
+
     if (Head(*Q)==Tail(*Q)) {
-        Head(*Q)=Nil;
-        Tail(*Q)=Nil;
+        Head(*Q)=0;
+        Tail(*Q)=0;
     } else {
         Head(*Q)++;
     }
 }
 
+void Turn(Queue *Q, Player *X)
+{
+    Del(Q, X);
+    Add(Q, *X);
+}
 
+void MakeNewGame(Queue *Q, List ListPlayer, int n)
+{
+    
+}

@@ -6,7 +6,7 @@ const Kata EndUnit = {" ENDUNIT" , 7};
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
-boolean IsEmpty (List L)
+boolean IsEmptyList (List L)
 /* Mengirim true jika list kosong. Lihat definisi di atas. */
 {
 	return FirstList(L) == Nil;
@@ -14,7 +14,7 @@ boolean IsEmpty (List L)
 
 
 /****************** PEMBUATAN LIST KOSONG ******************/
-void CreateEmpty (List *L)
+void CreateEmptyList (List *L)
 /* I.S. L sembarang             */
 /* F.S. Terbentuk list kosong. Lihat definisi di atas. */
 {
@@ -23,7 +23,7 @@ void CreateEmpty (List *L)
 
 
 /****************** Manajemen Memori ******************/
-address Alokasi (Unit X)
+address AlokasiUnit (Unit X)
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, NextList(P)=Nil */
@@ -37,7 +37,7 @@ address Alokasi (Unit X)
 	return P;
 }
 
-void Dealokasi (address P)
+void DealokasiList (address P)
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian address P */
@@ -70,7 +70,7 @@ void InsVFirstList (List *L, Unit X)
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
 {
-	address P = Alokasi(X);
+	address P = AlokasiUnit(X);
 	if(P!=Nil)
 		InsertFirstList(L, P);
 }
@@ -81,7 +81,7 @@ void InsVLast (List *L, Unit X)
 /* menambahkan elemen List di akhir: elemen terakhir yang baru */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 {
-	address P = Alokasi(X);
+	address P = AlokasiUnit(X);
 	if(P!=Nil)
 		InsertLast(L, P);
 }
@@ -116,7 +116,7 @@ void InsertFirstList (List *L, address P)
 /* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
 {
 	address Q = FirstList(*L);
-	if(IsEmpty(*L)){
+	if(IsEmptyList(*L)){
 		FirstList(*L) = P;
 		NextList(FirstList(*L)) = FirstList(*L);
 	}
@@ -136,7 +136,7 @@ void InsertLast (List *L, address P)
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
 {
 	address Q = FirstList(*L);
-	if(IsEmpty(*L)){
+	if(IsEmptyList(*L)){
 		FirstList(*L) = P;
 		NextList(FirstList(*L)) = FirstList(*L);
 	}
@@ -169,7 +169,7 @@ void DelFirstList (List *L, address *P)
 	address Q = FirstList(*L);
 	*P = Q;
 	if(NextList(Q) == FirstList(*L)){
-		CreateEmpty(L);
+		CreateEmptyList(L);
 	}
 	else{
 		while(NextList(Q) != FirstList(*L)){
@@ -190,7 +190,7 @@ void DelLast (List *L, address *P)
 	address Q = FirstList(*L);
 	*P = Q;
 	if(NextList(Q) == FirstList(*L)){
-		CreateEmpty(L);
+		CreateEmptyList(L);
 	}
 	else{
 		while(NextList(NextList(Q)) != FirstList(*L)){

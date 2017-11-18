@@ -3,11 +3,16 @@
 #include "boolean.h"
 #include "map.h"
 #include "player.h"
+#include "listsirkuler.h"
 
 int Baris, Kolom;
 Queue TurnPlayer;
 int pilihanawal;
-int PlayerTurn;
+Queue PlayerTurn;
+Player SelectedPlayer;
+List ListUnitAwal;
+List ListUnitPlayer1;
+List ListUnitPlayer2;
 
 const Kata recruit = {" RECRUIT", 7};
 const Kata change_unit = {" CHANGE_UNIT", 12};
@@ -24,16 +29,13 @@ int main()
 	printf("Masukkan pilihan : ");
 	scanf("%d", &pilihanawal);
 	if (pilihanawal == 1) {
-		//Persiapan baca file (ADT UNIT, PLAYER)
-
+		bacaunit(&ListUnitAwal);
 		MATRIKS MAP;
 		printf("Masukkan Baris dan Kolom pada MAP : ");
 		scanf("%d %d", &Baris, &Kolom);
 		convertIndex(&Baris, &Kolom);
 		CreateMap(Baris, Kolom, &MAP);
 		PrintMap(Baris, Kolom, MAP);
-
-		MakeNewGame(2, &TurnPlayer);
 	} else if (pilihanawal == 2) {
 		
 	} else {
@@ -43,8 +45,6 @@ int main()
 	boolean Main = true;
 	boolean EndTurn = false;
 	while(Main) {
-		Turn(&TurnPlayer, &PlayerTurn);
-		printf("%d\n", PlayerTurn);
 		EndTurn = false;
 		while(!EndTurn) {
 			Kata pilihan;

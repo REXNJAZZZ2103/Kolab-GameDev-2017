@@ -6,18 +6,16 @@
 #include "point.h"
 
 #define Nil 0
-#define MaxEl 10
+#define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
 /* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
 
 //typedef int infotype;
-typedef int address;   /* indeks tabel */
-
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
 typedef struct {
-	POINT P; /* tabel penyimpan elemen */
-	address TOP;  /* alamat TOP: elemen puncak */
+	POINT T[101]; /* tabel penyimpan elemen */
+	int TOP;  /* alamat TOP: elemen puncak */
 } Stack;
 /* Definisi stack S kosong : S.TOP = Nil */
 /* Elemen yang dipakai menyimpan nilai Stack T[1]..T[MaxEl] */
@@ -31,7 +29,7 @@ typedef struct {
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
-void CreateEmpty (Stack *S)
+void CreateEmptyStack (Stack *S)
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
 /* jadi indeksnya antara 1.. MaxEl+1 karena 0 tidak dipakai */
@@ -41,12 +39,12 @@ void CreateEmpty (Stack *S)
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
-boolean IsEmpty (Stack S)
+boolean IsEmptyStack (Stack S)
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
 {
 	return Top(S) == Nil;
 }
-boolean IsFull (Stack S)
+boolean IsFullStack (Stack S)
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 {
 	return Top(S) == MaxEl;
@@ -59,7 +57,8 @@ void Push (Stack * S, POINT P)
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
 {
 	Top(*S) += 1;
-	InfoTop(*S) = X;
+	InfoTop(*S).X = P.X;
+	InfoTop(*S).Y = P.Y;
 }
 
 /* ************ Menghapus sebuah elemen Stack ************ */
@@ -68,6 +67,7 @@ void Pop (Stack * S, POINT * P)
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
 {
-	*X = InfoTop(*S);
-	Top(*S) -= 1;
+	(*P).X = InfoTop(*S).X;
+	(*P).Y = InfoTop(*S).Y;
+	Top(*S) --;
 }
