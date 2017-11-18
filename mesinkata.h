@@ -9,7 +9,7 @@
 
 #define NKMax 50
 #define BLANK ' '
-#define NEWLINE 13
+#define NEWLINE '\n'
 
 typedef struct {
 	char TabKata[NKMax+1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */
@@ -37,7 +37,7 @@ void ADVKATA(boolean bacafile);
           Jika CC = MARK, EndKata = true.		  
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 
-void SalinKata(boolean bacafile);
+void STARTKATA(boolean bacafile, Kata File);
 /* Mengakuisisi kata, menyimpan dalam CKata
    I.S. : CC adalah karakter pertama dari kata
    F.S. : CKata berisi kata yang sudah diakuisisi; 
@@ -60,9 +60,11 @@ int KatatoBilangan(Kata K);
 void PrintKata(Kata K);
 /* I.S. : K1 terdefinisi
    Proses : menulis ke layar kata K tanpa karakter tambahan lainnya */
+   
+void SalinKata(boolean bacafile);
 
 void InputString(Kata *K);
 
-void STARTKATA(boolean bacafile);
+void KatatoArrChar(Kata File,char* temp);
 
 #endif
