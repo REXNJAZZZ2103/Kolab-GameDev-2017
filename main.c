@@ -27,7 +27,8 @@ const Kata Kosong = {" ", 0};
 const Kata Move = {" Move", 4};
 const Kata Undo = {" Undo", 4};
 const Kata EndT = {" EndTurn", 7};
-MATRIKS MAP;
+MATRIKS MAPASLI;
+MATRIKS MAPCOPY;
 
 int main()
 {
@@ -40,11 +41,11 @@ int main()
 		printf("Masukkan Baris dan Kolom pada MAP : ");
 		scanf("%d %d", &Baris, &Kolom);
 		BarisR = Baris, KolomR = Kolom;
-		MAP.NBrsEff = BarisR;
-		MAP.NKolEff = KolomR;
+		MAPASLI.NBrsEff = BarisR;
+		MAPASLI.NKolEff = KolomR;
 		convertIndex(&Baris, &Kolom);
-		CreateMap(Baris, Kolom, &MAP);
-		PrintMap(Baris, Kolom, MAP);
+		CreateMap(Baris, Kolom, &MAPASLI);
+		PrintMap(Baris, Kolom, MAPASLI);
 
 		bacaunit(&ListUnitAwal);
 		CreateEmptyList(&ListUnitPlayer1);
@@ -79,14 +80,13 @@ int main()
 			}
 			printf("\n");
 			Kata pilihan;
+			printf("Your Input : ");
 			STARTKATA(false, Kosong);
 			pilihan = CKata;
 			if (!IsKataSama(pilihan, EndT)) {
 				if (IsKataSama(pilihan, Move)) {
-					printf("HAI\n");
-					UpdateMoveMAP(&MAP, SelectedUnit1, 1);
-					PrintMap(Baris, Kolom, MAP);
-					printf("\n");
+					UpdateMoveMAP(&MAPASLI, SelectedUnit1, 1);
+					PrintMap(Baris, Kolom, MAPASLI);
 				}
 				int ss;
 				scanf("%d", &ss);

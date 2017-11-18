@@ -4,6 +4,7 @@
 #define MATRIKS_H
 
 #include "boolean.h"
+#include "point.h"
 #include "unit.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
@@ -42,5 +43,7 @@ boolean IsIdxValid (int i, int j);
 /* ********** Assignment  MATRIKS ********** */
 void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl);
 /* Melakukan assignment MHsl  MIn */
+
+POINT AksesMatriksUnit(int a, int b);
 
 #endif
