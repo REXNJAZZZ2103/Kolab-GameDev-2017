@@ -15,8 +15,8 @@ void convertIndex (int *m, int *n);
 
 void RecruitMap(int m, int n, MATRIKS *M, int x);
 
-void CopyMap(MATRIKS Min, MATRIKS *Mout);
-
 void UpdateMoveMAP(MATRIKS *MAP, Unit X, int player);
+
+void CopyMap(MATRIKS Min, MATRIKS *Mout);
 
 #endif

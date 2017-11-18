@@ -124,5 +124,6 @@ void DelP (List *L, Unit X);
 // /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
 
 void bacaunit(List *stdunit);
+void UpdateListMove(List *L, Unit *X, POINT PTujuan);	
 
 #endif

@@ -15,6 +15,7 @@ typedef struct{
 	int currmove;
 	int heal;
 	int cost;
+	char simbol;
 	POINT pos;
 } Unit;
 
@@ -32,6 +33,7 @@ typedef struct {
 #define currmove(X) (X).currmove
 #define position(X) (X).pos
 #define pemilik(X) (X).kepemilikan
+#define simbol(X) (X).simbol
 #define CC(X) (X).CC
 
 void PrintUnitRekrut(Unit U);

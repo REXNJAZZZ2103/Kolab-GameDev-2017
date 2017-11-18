@@ -281,15 +281,29 @@ void bacaunit(List *stdunit){
 						 break;
 				case 7 : Utemp.heal = KatatoBilangan(CKata);
 						 break;
+				case 8 : Utemp.simbol = CKata.TabKata[1];
+						 break;
 			}
 			i++;
 		} else{
 			Utemp.canatk = true;
-			if(i<8)
-				Utemp.heal = 0;
 			i=1;
 			InsVLast(stdunit, Utemp);
 		}
 		ADVKATA(true);
 	}
+}
+
+void UpdateListMove(List *L, Unit *X, POINT PTujuan) {
+	address P;
+	int differ;
+
+	P = SearchPoint(*L, (*X).pos);
+
+	differ = abs(PTujuan.X - (*X).pos.X) + abs(PTujuan.Y - (*X).pos.Y);
+
+	InfoList(P).pos = PTujuan;
+	InfoList(P).currmove = InfoList(P).currmove - differ;
+
+	(*X).pos = PTujuan;
 }

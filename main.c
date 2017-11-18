@@ -12,7 +12,7 @@ Queue PlayerTurn;
 Player SelectedPlayer;
 Unit SelectedUnit1;
 Unit SelectedUnit2;
-int x = 1;
+int PlayerKe = 1;
 List ListUnitAwal;
 List ListUnitPlayer1;
 List ListUnitPlayer2;
@@ -72,8 +72,8 @@ int main()
 		BacaPlayer(&PlayerTurn);
 		Del(&PlayerTurn, &SelectedPlayer);
 		while(!EndTurn) {
-			PrintPlayer(x, SelectedPlayer);
-			if (x == 1) {
+			PrintPlayer(PlayerKe, SelectedPlayer);
+			if (PlayerKe == 1) {
 				PrintMove(SelectedUnit1);
 			} else {
 				PrintMove(SelectedUnit2);
@@ -85,8 +85,31 @@ int main()
 			pilihan = CKata;
 			if (!IsKataSama(pilihan, EndT)) {
 				if (IsKataSama(pilihan, Move)) {
-					UpdateMoveMAP(&MAPASLI, SelectedUnit1, 1);
-					PrintMap(Baris, Kolom, MAPASLI);
+					if (PlayerKe == 1) {
+						CopyMap(MAPASLI, &MAPCOPY);
+						UpdateMoveMAP(&MAPCOPY, SelectedUnit1, 1);
+						int TujuanX, TujuanY;
+						POINT PTujuan, PAsal;
+						PrintMap(Baris, Kolom, MAPCOPY);
+						printf("Please enter cell's coordinate x y :");
+						scanf("%d %d", &TujuanX, &TujuanY);
+						PTujuan = AksesMatriksUnit(TujuanX, TujuanY);
+						PAsal = AksesMatriksUnit(SelectedUnit1.pos.X, SelectedUnit1.pos.Y);
+						while(Elmt(MAPCOPY, PTujuan.X, PTujuan.Y).CC != '?') {
+							printf("You can't move there\n");
+							printf("Please enter cell's coordinate x y :");
+							scanf("%d %d", &TujuanX, &TujuanY);
+							PTujuan = AksesMatriksUnit(TujuanX, TujuanY);
+						}
+						Elmt(MAPASLI, PTujuan.X, PTujuan.Y).CC = SelectedUnit1.simbol;
+						Elmt(MAPASLI, PTujuan.X, PTujuan.Y).kepemilikan = PlayerKe;
+						Elmt(MAPASLI, PAsal.X, PAsal.Y).CC = ' ';
+						Elmt(MAPASLI, PAsal.X, PAsal.Y).kepemilikan = 3;
+						PTujuan.X = TujuanX;
+						PTujuan.Y = TujuanY;
+						UpdateListMove(&ListUnitPlayer1, &SelectedUnit1, PTujuan);						
+					}
+
 				}
 				int ss;
 				scanf("%d", &ss);

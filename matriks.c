@@ -26,8 +26,8 @@ void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl)
 /* Melakukan assignment MHsl  MIn */
 {
     int i,j;
-    for (i = 1; i <= MIn.NBrsEff; i++) {
-        for (j = 1; j <= MIn.NKolEff; j++) {
+    for (i = 0; i <= MIn.NBrsEff; i++) {
+        for (j = 0; j <= MIn.NKolEff; j++) {
             Elmt(*MHsl,i,j) = Elmt(MIn,i,j);
         }
     }

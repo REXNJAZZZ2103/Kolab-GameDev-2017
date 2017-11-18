@@ -142,12 +142,6 @@ void RecruitMap(int m, int n, MATRIKS *M, int x)
     }
   }
 }
-void CopyMap(MATRIKS Min, MATRIKS *Mout)
-/*Untuk Mengcopy Map ke suatu Map kosong*/
-{
-  CopyMATRIKS(Min, Mout);
-}
-
 
 void UpdateMoveMAP(MATRIKS *MAP, Unit X, int player) {
   int i = 1;
@@ -216,4 +210,10 @@ void UpdateMoveMAP(MATRIKS *MAP, Unit X, int player) {
       Elmt(*MAP, P.X, P.Y).kepemilikan = 3;
     }
   }    
+}
+
+void CopyMap(MATRIKS Min, MATRIKS *Mout)
+/*Untuk Mengcopy Map ke suatu Map kosong*/
+{
+  CopyMATRIKS(Min, Mout);
 }
