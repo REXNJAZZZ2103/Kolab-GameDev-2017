@@ -5,7 +5,7 @@
 #include "player.h"
 #include "listsirkuler.h"
 
-int Baris, Kolom, BarisR, KolomR;
+int Baris, Kolom;
 Queue TurnPlayer;
 int pilihanawal;
 Queue PlayerTurn;
@@ -36,26 +36,17 @@ int main()
 	printf("Masukkan pilihan : ");
 	scanf("%d", &pilihanawal);
 	if (pilihanawal == 1) {
+		bacaunit(&ListUnitAwal);
 		MATRIKS MAP;
 		printf("Masukkan Baris dan Kolom pada MAP : ");
 		scanf("%d %d", &Baris, &Kolom);
-		BarisR = Baris, KolomR = Kolom;
 		convertIndex(&Baris, &Kolom);
 		CreateMap(Baris, Kolom, &MAP);
 		PrintMap(Baris, Kolom, MAP);
-
-		bacaunit(&ListUnitAwal);
-		CreateEmptyList(&ListUnitPlayer1);
-		InsertFirstList(&ListUnitPlayer1, FirstList(ListUnitAwal));
-		InfoList(FirstList(ListUnitPlayer1)).pos.X = 2;
-		InfoList(FirstList(ListUnitPlayer1)).pos.Y = KolomR-1;
-		CreateEmptyList(&ListUnitPlayer2);
-		InsertFirstList(&ListUnitPlayer2, FirstList(ListUnitAwal));
-		InfoList(FirstList(ListUnitPlayer2)).pos.X = BarisR-1;
-		InfoList(FirstList(ListUnitPlayer2)).pos.Y = 2;
-
+		RecruitMap(Baris, Kolom, &MAP, 1);
+		PrintMap(Baris, Kolom, MAP);
 	} else if (pilihanawal == 2) {
-		
+
 	} else {
 
 	}
@@ -63,59 +54,52 @@ int main()
 	boolean Main = true;
 	boolean EndTurn = false;
 	while(Main) {
-		SelectedUnit1 = InfoList(FirstList(ListUnitPlayer1));
-		SelectedUnit2 = InfoList(FirstList(ListUnitPlayer2));
 		EndTurn = false;
-		BacaPlayer(&PlayerTurn);
-		Del(&PlayerTurn, &SelectedPlayer);
 		while(!EndTurn) {
 			PrintPlayer(x, SelectedPlayer);
+			printf("\n");
 			if (x == 1) {
 				PrintMove(SelectedUnit1);
 			} else {
 				PrintMove(SelectedUnit2);
 			}
 			printf("\n");
-			int ss;
-			scanf("%d\n", &ss);
-			// printf("\n");
-			// Kata pilihan;
-			// STARTKATA(false, Kosong);
-			// pilihan = CKata;
-			// if (!IsKataSama(pilihan, EndT)) {
-			// 	if (IsKataSama(pilihan, Move)) {
-			// 		//Update Map (Map.h)
-			// 		//Update Unit yang digerakkan (Unit.h)
-			// 		//Update stack buat di Undo(Undo.h)
-			// 		//Update Map (Map.h)
-			// 	} else if (IsKataSama(pilihan, Undo)) {
-			// 		//Update Stack(Stack.h)
-			// 	// } else if (pilihan == "Change Unit") {
-			// 	// 	//Print List Unit (list.h)
-			// 	// 	//Ganti Selected Unit
-			// 	// } else if (pilihan == "Recruit") {
-			// 	// 	//Check posisi King
-			// 	// 	//Print List Semua Unit (list.h)
-			// 	// 	//Update status Player
-			// 	// 	//Update King movement Point
-			// 	// 	//Update Selected Unit
-			// 	// } else if (pilihan == "Attack") {
-			// 	// 	//Print Unit yang bisa di attack (list.h)
-			// 	// 	//Update Darah Unit yang di attack dan nge-attack (list.h)
-			// 	// 	//Update Status Unit yang nge-attack
-			// 	// } else if (pilihan == "Map") {
-			// 	// 	//Print Map (Map.h)
-			// 	// } else if (pilihan == "Info") {
-			// 	// 	//Print Status setiap variabel pada matriks sesuai dengan perhitungan
-			// 	// } else if (pilihan == "End Turn") {
-			// 	// 	EndTurn = true;
-			// 	// } else {
-			// 	// 	puts("Masukan Salah");
-			// 	// }
-			// // } else if (pilihan == "EndTurn"){
-			// // 	EndTurn = true;
-			// 	}
-			// }
+			Kata pilihan;
+			STARTKATA(false, Kosong);
+			pilihan = CKata;
+			if (!IsKataSama(pilihan, EndT)) {
+				if (IsKataSama(pilihan, Move)) {
+				//Update Map (Map.h)
+				//Update Unit yang digerakkan (Unit.h)
+				//Update stack buat di Undo(Undo.h)
+				//Update Map (Map.h)
+				} else if (IsKataSama(pilihan, Undo)) {
+				//Update Stack(Stack.h)
+				} else if (IsKataSama(pilihan, Change_Unit)) {
+		 		//Print List Unit (list.h)
+		 	 	//Ganti Selected Unit
+				} else if (IsKataSama(pilihan, Recruit)) {
+			 	//Check posisi King
+			 	//Print List Semua Unit (list.h)
+			 	//Update status Player
+			 	//Update King movement Point
+			 	//Update Selected Unit
+				} else if (IsKataSama(pilihan, Attack)) {
+			 	//Print Unit yang bisa di attack (list.h)
+			 	//Update Darah Unit yang di attack dan nge-attack (list.h)
+			 	//Update Status Unit yang nge-attack
+				} else if (IsKataSama(pilihan, Map)) {
+			 	//Print Map (Map.h)
+				} else if (IsKataSama(pilihan, Info)) {
+			 	//Print Status setiap variabel pada matriks sesuai dengan perhitungan
+				} else if (IsKataSama(pilihan, EndT)) {
+			 		EndTurn = true;
+			 	} else {
+			 		puts("Masukan Salah");
+			 	}
+		  } else if (IsKataSama(pilihan, EndT)) {
+		  	EndTurn = true;
+		 	}
 		}
 	}
 }
