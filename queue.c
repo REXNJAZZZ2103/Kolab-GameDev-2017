@@ -116,6 +116,7 @@ void BacaPlayer(Queue *Q){
 				case 3 : Income(P) = KatatoBilangan(CKata);
 						 break;
 				case 4 : Upkeep(P) = KatatoBilangan(CKata);
+						 break;
 			}
 			i++;
 		}
