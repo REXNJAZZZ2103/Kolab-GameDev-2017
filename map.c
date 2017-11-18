@@ -126,3 +126,18 @@ void RecruitMap(int m, int n, MATRIKS *M, int x)
     Elmt(*M, 10, n-7).kepemilikan = 3;
   }
 }
+
+void UpdateMoveMAP(MATRIKS *MAP, Unit X, int player) {
+  int i = 1;
+  boolean Found = false;
+  for(i = 1; i <= X.maxmove && !Found; i++) {
+    if (X.pos.Y + i > (*MAP).NKolEff) {
+      Found = true;
+    } else if (Elmt(*MAP, (X.pos.X-1)*4+2, (X.pos.Y-1)*4 + i*4 + 2).kepemilikan != player && Elmt(*MAP, (X.pos.X-1)*4+2, (X.pos.Y-1)*4 + i*4 + 2).CC != ' ') {
+      Found = true;
+    } else {
+      Elmt(*MAP, (X.pos.X-1)*4+2, (X.pos.Y-1)*4 + i*4 + 2).CC = '?';
+      Elmt(*MAP, (X.pos.X-1)*4+2, (X.pos.Y-1)*4 + i*4 + 2).kepemilikan = 3;
+    }
+  }
+}

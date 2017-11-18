@@ -106,8 +106,6 @@ void BacaPlayer(Queue *Q){
     STARTKATA(true, FPlayer);
     while(!EOP){
         if(!IsKataSama(CKata, ENDPLAYER)){
-            PrintKata(CKata);
-            printf("\n");
             switch(i){
                 case 1 : Name(P) = CKata;
                          break;
@@ -122,8 +120,6 @@ void BacaPlayer(Queue *Q){
         }
         else{
             i = 1;
-            PrintPlayer(1, P);
-            printf("\n");
             Add(Q, P);
         }
         ADVKATA(true);
