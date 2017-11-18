@@ -15,14 +15,17 @@ void IgnoreBlank(boolean bacafile)
 	}
 }
 
-void STARTKATA(boolean bacafile)
+void STARTKATA(boolean bacafile, Kata File)
 /* I.S. : CC sembarang 
    F.S. : EndKata = true, dan CC = MARK; 
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 {
-	if(bacafile)
-		STARTFILE();
+	if(bacafile){
+		char temp[50];
+		KatatoArrChar(File, temp);
+		STARTFILE(temp);
+	}
 	else
 		STARTCLI();
 	IgnoreBlank(bacafile);
@@ -48,7 +51,7 @@ void ADVKATA(boolean bacafile)
 void SalinKata(boolean bacafile)
 {
 	int i;
-	for(i=1;i<=NKMax && (CC!=MARK&&CC!=BLANK);i++){
+	for(i=1;i<=NKMax && (CC!=MARK&&CC!=BLANK&&CC!=NEWLINE);i++){
 		CKata.TabKata[i]=CC;
 		if(bacafile)
 			ADVFILE();
@@ -104,4 +107,12 @@ void InputString(Kata *K) {
 	}
 	i--;
 	(*K).Length = i;
+}
+
+void KatatoArrChar(Kata File, char* temp){
+	int i=0;
+	for(i=0;i<File.Length;i++){
+		temp[i] = File.TabKata[i+1];
+	}
+	temp[i]='\0';
 }
