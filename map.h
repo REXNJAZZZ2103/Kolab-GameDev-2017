@@ -13,4 +13,6 @@ void PrintMap(int m, int n, MATRIKS M);
 void convertIndex (int *m, int *n);
 /* Untuk mengkonvert indeks */
 
+void RecruitMap(int m, int n, MATRIKS *M, int x);
+
 #endif
