@@ -4,8 +4,10 @@
 void CreateMap(int m, int n, MATRIKS* M) {
   NBrsEff(*M) = m;
   NKolEff(*M) = n;
-  for (int i=0; i<m; i++) {
-    for (int j=0; j<n; j++) {
+  int i;
+  for (i=0; i<m; i++) {
+    int j;
+    for (j=0; j<n; j++) {
       if (i%4==0) {
           Elmt(*M,i,j).CC='*';
       Elmt(*M,i,j).kepemilikan=3;
@@ -50,46 +52,9 @@ void CreateMap(int m, int n, MATRIKS* M) {
   Elmt(*M, 9, n-7).kepemilikan = 2;
 }
 
-void RecruitMap(int m, int n, MATRIKS *M, int x) {  
-	if (x == 1) {
-		if (Elmt(*M, m-3, 6).CC == ' ') {
-			Elmt(*M, m-3, 6).CC = '#';
-			Elmt(*M, m-3, 6).kepemilikan = 3;
-		}
-		if (Elmt(*M, m-11, 6).CC == ' ') {
-			Elmt(*M, m-11, 6).CC = '#';
-			Elmt(*M, m-11, 6).kepemilikan = 3;
-		} 
-		if (Elmt(*M, m-7, 2).CC == ' ') {
-			Elmt(*M, m-7, 2).CC = '#';
-			Elmt(*M, m-7, 2).kepemilikan = 3;
-		} 
-		if (Elmt(*M, m-7, 10).CC == ' ') {
-			Elmt(*M, m-7, 10).CC = '#';
-			Elmt(*M, m-7, 10).kepemilikan = 3;
-		} 	
-	} else {
-		if (Elmt(*M, 6, n-3).CC == ' ') {
-			Elmt(*M, 6, n-3).CC = '#';
-			Elmt(*M, 6, n-3).kepemilikan = 3;
-		}
-		if (Elmt(*M, 6, n-11).CC == ' ') {
-			Elmt(*M, 6, n-11).CC = '#';
-			Elmt(*M, 6, n-11).kepemilikan = 3;
-		} 
-		if (Elmt(*M, 10, n-7).CC == ' ') {
-			Elmt(*M, 10, n-7).CC = '#';
-			Elmt(*M, 10, n-7).kepemilikan = 3;
-		} 
-  	if (Elmt(*M, 2, n-7).CC == ' ') {
-			Elmt(*M, 2, n-7).CC = '#';
-			Elmt(*M, 2, n-7).kepemilikan = 3;
-		}		
-	}
-}
-
 void PrintMap(int m, int n, MATRIKS M) {
-  for (int k=0; k<(n-1)/4; k++) {
+  int k;
+  for (k=0; k<(n-1)/4; k++) {
     if (k==0) {
         printf("   ");
     }
@@ -106,9 +71,10 @@ void PrintMap(int m, int n, MATRIKS M) {
   }
 
   int l = 0;
-
-  for (int i=0; i<m; i++) {
-    for (int j=0; j<n; j++) {
+  int i;
+  for (i=0; i<m; i++) {
+    int j;
+    for (j=0; j<n; j++) {
       if (j==0) {
         if ((i-2)%4==0) {
           if (l<10) {
