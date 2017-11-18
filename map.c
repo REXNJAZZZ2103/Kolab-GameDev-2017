@@ -102,3 +102,27 @@ void convertIndex (int *m, int *n) {
     *m = ((*m)*4)+1;
     *n = ((*n)*4)+1;
 }
+
+void RecruitMap(int m, int n, MATRIKS *M, int x)
+/* Untuk Menampilkan Cell yang ditempati untuk recruit*/
+{
+  if (x == 1) {
+    Elmt(*M, m-3, 6).CC = '#';
+    Elmt(*M, m-3, 6).kepemilikan = 3;
+    Elmt(*M, m-11, 6).CC = '#';
+    Elmt(*M, m-11, 6).kepemilikan = 3;
+    Elmt(*M, m-7, 2).CC = '#';
+    Elmt(*M, m-7, 2).kepemilikan = 3;
+    Elmt(*M, m-7, 10).CC = '#';
+    Elmt(*M, m-7, 10).kepemilikan = 3;
+  } else if (x == 2) {
+    Elmt(*M, 2, n-7).CC = '#';
+    Elmt(*M, 2, n-7).kepemilikan = 3;
+    Elmt(*M, 6, n-3).CC = '#';
+    Elmt(*M, 6, n-3).kepemilikan = 3;
+    Elmt(*M, 6, n-11).CC = '#';
+    Elmt(*M, 6, n-11).kepemilikan = 3;
+    Elmt(*M, 10, n-7).CC = '#';
+    Elmt(*M, 10, n-7).kepemilikan = 3;
+  }
+}
