@@ -99,3 +99,30 @@ void MakeNewGame(Queue *Q, List ListPlayer, int n)
 {
     
 }
+
+void BacaPlayer(Queue *Q){
+	int i = 1;
+	CreateEmptyQueue(Q);
+	Player P;
+	CreateEmptyList(&(P.village));
+	STARTKATA(true, FPlayer);
+	while(!EOP){
+		if(!IsKataSama(CKata, )){
+			switch(i){
+				case 1 : Name(P) = CKata;
+						 break;
+				case 2 : Gold(P) = KatatoBilangan(CKata);
+						 break;
+				case 3 : Income(P) = KatatoBilangan(CKata);
+						 break;
+				case 4 : Upkeep(P) = KatatoBilangan(CKata);
+			}
+			i++;
+		}
+		else{
+			i = 1;
+			ADD(Q, P);
+		}
+		ADVKATA(true);
+	}
+}
