@@ -8,8 +8,6 @@
 #include "player.h"
 #include "listsirkuler.h"
 
-const Kata FPlayer = {" Player.txt", 10};
-
 /* Definisi elemen dan address */
 /* Contoh deklarasi variabel bertype Queue : */
 /* Versi I : tabel dinamik, Head dan Tail eksplisit, ukuran disimpan */
@@ -63,8 +61,6 @@ void Del (Queue *Q, Player *X);
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
         Q mungkin kosong */
 void Turn(Queue *Q, Player *X);
-
-void MakeNewGame(Queue *Q, List ListPlayer, int n);
 
 void BacaPlayer(Queue *Q);
 

@@ -1,23 +1,8 @@
-#include "queue.h"
-#include "player.h"
 #include <stdio.h>
+#include "player.h"
 
-void MakeNewGame(int n, Queue *Q) {
-	CreateEmpty(Q, 100);
-	for(int i = 1; i <= n; i++) {
-		Add(Q, i);
-	}
-}
-
-void Turn(Queue *Q, int *X)
+void PrintPlayer(int x, Player Selected)
 {
-    Del(Q, X);
-    Add(Q, *X);
-}
-
-void PrintTurn(Player X) {
-	printf("Player %d's Turn\n", 1);
-	printf("Cash : %dG | ", X.gold);
-	printf("Income : %dG : ", X.income);
-	printf("Upkeep : %dG\n", X.upkeep);
+	printf("Player %d's Turn\n", x);
+	printf("Cash: %dG | Income : %dG | Upkeep: %dG\n", Selected.gold, Selected.income, Selected.upkeep);
 }

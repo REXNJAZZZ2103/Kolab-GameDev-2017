@@ -12,7 +12,7 @@
 #define NEWLINE '\n'
 
 typedef struct {
-	char TabKata[NKMax+1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */
+  char TabKata[NKMax+1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */
     int Length;
 } Kata;
 
@@ -34,7 +34,7 @@ void ADVKATA(boolean bacafile);
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi 
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi, 
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = MARK, EndKata = true.		  
+          Jika CC = MARK, EndKata = true.     
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 
 void STARTKATA(boolean bacafile, Kata File);

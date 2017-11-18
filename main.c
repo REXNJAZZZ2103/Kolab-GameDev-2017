@@ -10,16 +10,23 @@ Queue TurnPlayer;
 int pilihanawal;
 Queue PlayerTurn;
 Player SelectedPlayer;
+Unit SelectedUnit1;
+Unit SelectedUnit2;
+int x = 1;
 List ListUnitAwal;
 List ListUnitPlayer1;
 List ListUnitPlayer2;
 
-const Kata recruit = {" RECRUIT", 7};
-const Kata change_unit = {" CHANGE_UNIT", 12};
-const Kata info = {" INF0", 4};
-const Kata attack = {" ATTACK", 6};
-const Kata map = {" MAP", 3};
-const Kata next_unit = {" NEXT_UNIT", 9};
+const Kata Recruit = {" RECRUIT", 7};
+const Kata Change_Unit = {" CHANGE_UNIT", 12};
+const Kata Info = {" INF0", 4};
+const Kata Attack = {" ATTACK", 6};
+const Kata Map = {" MAP", 3};
+const Kata Next_Unit = {" NEXT_UNIT", 9};
+const Kata Kosong = {" ", 0};
+const Kata Move = {" Move", 4};
+const Kata Undo = {" Undo", 4};
+const Kata EndT = {" EndTurn", 7};
 
 int main()
 {
@@ -36,6 +43,8 @@ int main()
 		convertIndex(&Baris, &Kolom);
 		CreateMap(Baris, Kolom, &MAP);
 		PrintMap(Baris, Kolom, MAP);
+		RecruitMap(Baris, Kolom, &MAP, 1);
+		PrintMap(Baris, Kolom, MAP);
 	} else if (pilihanawal == 2) {
 		
 	} else {
@@ -47,44 +56,50 @@ int main()
 	while(Main) {
 		EndTurn = false;
 		while(!EndTurn) {
-			Kata pilihan;
-			getchar();
-			InputString(&pilihan);
-			PrintKata(pilihan);
-			//PrintPlayer(X) (ADT PLAYER)
-			//PrintSelectedUnit
-			// if (pilihan != "EndTurn") {
-			// 	if (pilihan == "Move") {
+			// PrintPlayer(x, SelectedPlayer);
+			// printf("\n");
+			// if (x == 1) {
+			// 	PrintMove(SelectedUnit1);
+			// } else {
+			// 	PrintMove(SelectedUnit2);
+			// }
+			// printf("\n");
+			// Kata pilihan;
+			// STARTKATA(false, Kosong);
+			// pilihan = CKata;
+			// if (!IsKataSama(pilihan, EndT)) {
+			// 	if (IsKataSama(pilihan, Move)) {
 			// 		//Update Map (Map.h)
 			// 		//Update Unit yang digerakkan (Unit.h)
 			// 		//Update stack buat di Undo(Undo.h)
 			// 		//Update Map (Map.h)
-			// 	} else if (pilihan == "Undo") {
+			// 	} else if (IsKataSama(pilihan, Undo)) {
 			// 		//Update Stack(Stack.h)
-			// 	} else if (pilihan == "Change Unit") {
-			// 		//Print List Unit (list.h)
-			// 		//Ganti Selected Unit
-			// 	} else if (pilihan == "Recruit") {
-			// 		//Check posisi King
-			// 		//Print List Semua Unit (list.h)
-			// 		//Update status Player
-			// 		//Update King movement Point
-			// 		//Update Selected Unit
-			// 	} else if (pilihan == "Attack") {
-			// 		//Print Unit yang bisa di attack (list.h)
-			// 		//Update Darah Unit yang di attack dan nge-attack (list.h)
-			// 		//Update Status Unit yang nge-attack
-			// 	} else if (pilihan == "Map") {
-			// 		//Print Map (Map.h)
-			// 	} else if (pilihan == "Info") {
-			// 		//Print Status setiap variabel pada matriks sesuai dengan perhitungan
-			// 	} else if (pilihan == "End Turn") {
-			// 		EndTurn = true;
-			// 	} else {
-			// 		puts("Masukan Salah");
+			// 	// } else if (pilihan == "Change Unit") {
+			// 	// 	//Print List Unit (list.h)
+			// 	// 	//Ganti Selected Unit
+			// 	// } else if (pilihan == "Recruit") {
+			// 	// 	//Check posisi King
+			// 	// 	//Print List Semua Unit (list.h)
+			// 	// 	//Update status Player
+			// 	// 	//Update King movement Point
+			// 	// 	//Update Selected Unit
+			// 	// } else if (pilihan == "Attack") {
+			// 	// 	//Print Unit yang bisa di attack (list.h)
+			// 	// 	//Update Darah Unit yang di attack dan nge-attack (list.h)
+			// 	// 	//Update Status Unit yang nge-attack
+			// 	// } else if (pilihan == "Map") {
+			// 	// 	//Print Map (Map.h)
+			// 	// } else if (pilihan == "Info") {
+			// 	// 	//Print Status setiap variabel pada matriks sesuai dengan perhitungan
+			// 	// } else if (pilihan == "End Turn") {
+			// 	// 	EndTurn = true;
+			// 	// } else {
+			// 	// 	puts("Masukan Salah");
+			// 	// }
+			// // } else if (pilihan == "EndTurn"){
+			// // 	EndTurn = true;
 			// 	}
-			// } else if (pilihan == "EndTurn"){
-			// 	EndTurn = true;
 			// }
 		}
 	}

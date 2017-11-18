@@ -1,1 +1,8 @@
-King 100 5 5 Melee 0 0 ENDUNIT Archer 100 5 5 Melee 20 0 ENDUNIT Swordsman 100 5 5 Melee 30 0 ENDUNIT WhiteMage 100 5 5 Melee 50 10 ENDUNIT .
+King 
+100 
+5 
+5 
+Melee 
+0 
+0 
+ENDUNIT Archer 100 5 5 Melee 20 0 ENDUNIT Swordsman 100 5 5 Melee 30 0 ENDUNIT WhiteMage 100 5 5 Melee 50 10 ENDUNIT .

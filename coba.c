@@ -1,15 +1,11 @@
 #include "listsirkuler.h"
 #include "unit.h"
 #include <stdio.h>
+#include "queue.h"
 
 int main()
 {
-	List ListUnit;
-	int i;
+	Queue ListPlayer;
 
-	CreateEmpty(&ListUnit);
-
-	bacaunit(&ListUnit);
-
-	PrintUnitRekrut(InfoList(FirstList(ListUnit)));
+	BacaPlayer(&ListPlayer);
 }

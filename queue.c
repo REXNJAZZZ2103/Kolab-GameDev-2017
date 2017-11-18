@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "queue.h"
 
+const Kata FPlayer = {" Player.txt", 10};
+const Kata ENDPLAYER = {" EndPlayer", 9};
+
 /* ********* Prototype ********* */
 boolean IsEmpty (Queue Q)
 /* Mengirim true jika Q kosong: lihat definisi di atas */
@@ -95,35 +98,34 @@ void Turn(Queue *Q, Player *X)
     Add(Q, *X);
 }
 
-void MakeNewGame(Queue *Q, List ListPlayer, int n)
-{
-    
-}
-
 void BacaPlayer(Queue *Q){
-	int i = 1;
-	CreateEmptyQueue(Q);
-	Player P;
-	CreateEmptyList(&(P.village));
-	STARTKATA(true, FPlayer);
-	while(!EOP){
-		if(!IsKataSama(CKata, )){
-			switch(i){
-				case 1 : Name(P) = CKata;
-						 break;
-				case 2 : Gold(P) = KatatoBilangan(CKata);
-						 break;
-				case 3 : Income(P) = KatatoBilangan(CKata);
-						 break;
-				case 4 : Upkeep(P) = KatatoBilangan(CKata);
-						 break;
-			}
-			i++;
-		}
-		else{
-			i = 1;
-			ADD(Q, P);
-		}
-		ADVKATA(true);
-	}
+    int i = 1;
+    CreateEmptyQueue(Q, 100);
+    Player P;
+    //CreateEmptyList(&(P.village));
+    STARTKATA(true, FPlayer);
+    while(!EOP){
+        if(!IsKataSama(CKata, ENDPLAYER)){
+            PrintKata(CKata);
+            printf("\n");
+            switch(i){
+                case 1 : Name(P) = CKata;
+                         break;
+                case 2 : Gold(P) = KatatoBilangan(CKata);
+                         break;
+                case 3 : Income(P) = KatatoBilangan(CKata);
+                         break;
+                case 4 : Upkeep(P) = KatatoBilangan(CKata);
+                         break;
+            }
+            i++;
+        }
+        else{
+            i = 1;
+            PrintPlayer(1, P);
+            printf("\n");
+            Add(Q, P);
+        }
+        ADVKATA(true);
+    }
 }

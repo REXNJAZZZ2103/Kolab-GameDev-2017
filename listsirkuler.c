@@ -3,6 +3,7 @@
 #include "listsirkuler.h"
 
 const Kata EndUnit = {" ENDUNIT" , 7};
+const Kata FUnit = {" Unit.txt", 8};
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
@@ -258,9 +259,9 @@ void DelP (List *L, Unit X)
 // }
 
 void bacaunit(List *stdunit){
-	int i;
+	int i = 1;
 	Unit Utemp;
-	STARTKATA(true);
+	STARTKATA(true, FUnit);
 	while(!EOP){
 		if(!IsKataSama(CKata, EndUnit)){
 			switch(i){
