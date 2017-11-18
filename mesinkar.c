@@ -10,8 +10,8 @@ boolean EOP;
 static FILE * pita;
 static int retval;
 
-void STARTFILE() {
-	pita = fopen("Unit.txt","r");
+void STARTFILE(char* File) {
+	pita = fopen(File,"r");
 	ADVFILE();
 }
 
