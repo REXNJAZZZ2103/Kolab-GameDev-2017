@@ -147,3 +147,73 @@ void CopyMap(MATRIKS Min, MATRIKS *Mout)
 {
   CopyMATRIKS(Min, Mout);
 }
+
+
+void UpdateMoveMAP(MATRIKS *MAP, Unit X, int player) {
+  int i = 1;
+  boolean Found = false;
+
+  for(i = 1; i <= X.currmove && !Found; i++) {
+    POINT P;
+
+    P = AksesMatriksUnit(X.pos.X, X.pos.Y+i);
+    if (X.pos.Y + i > (*MAP).NKolEff) {
+      Found = true;
+    } else if (Elmt(*MAP, P.X, P.Y).kepemilikan != player && Elmt(*MAP, P.X, P.Y).CC != ' ') {
+      Found = true;
+    } else {
+      Elmt(*MAP, P.X, P.Y).CC = '?';
+      Elmt(*MAP, P.X, P.Y).kepemilikan = 3;
+    }
+  }
+
+  Found = false;
+
+  for(i = 1; i <= X.currmove && !Found; i++) {
+    POINT P;
+
+    P = AksesMatriksUnit(X.pos.X, X.pos.Y-i);
+    if (X.pos.Y - i < 0) {
+      Found = true;
+    } else if (Elmt(*MAP, P.X, P.Y).kepemilikan != player && Elmt(*MAP, P.X, P.Y).CC != ' ') {
+      Found = true;
+    } else {
+      Elmt(*MAP, P.X, P.Y).CC = '?';
+      Elmt(*MAP, P.X, P.Y).kepemilikan = 3;
+    }
+  }
+
+  Found = false;
+
+  for(i = 1; i <= X.currmove && !Found; i++) {
+    POINT P;
+
+    P = AksesMatriksUnit(X.pos.X-i, X.pos.Y);
+    if (X.pos.X - i < 0) {
+      Found = true;
+    } else if (Elmt(*MAP, P.X, P.Y).kepemilikan != player && Elmt(*MAP, P.X, P.Y).CC != ' ') {
+      Found = true;
+    } else {
+      if (Elmt(*MAP, P.X, P.Y).CC == ' ') {
+        Elmt(*MAP, P.X, P.Y).CC = '?';
+        Elmt(*MAP, P.X, P.Y).kepemilikan = 3;        
+      }
+    }
+  }
+
+  Found = false;
+
+  for(i = 1; i <= X.currmove && !Found; i++) {
+    POINT P;
+
+    P = AksesMatriksUnit(X.pos.X + i, X.pos.Y);
+    if (X.pos.X + i > (*MAP).NBrsEff) {
+      Found = true;
+    } else if (Elmt(*MAP, P.X, P.Y).kepemilikan != player && Elmt(*MAP, P.X, P.Y).CC != ' ') {
+      Found = true;
+    } else {
+      Elmt(*MAP, P.X, P.Y).CC = '?';
+      Elmt(*MAP, P.X, P.Y).kepemilikan = 3;
+    }
+  }    
+}
