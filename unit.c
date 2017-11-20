@@ -6,7 +6,6 @@ void PrintUnitRekrut(Unit U){
 	printf(" | Health %d | ATK %d | %dG", U.maxhealth, U.atkdmg,U.cost);
 }
 
-
 void PrintMove(Unit U){
 	printf("Unit : ");
 	PrintKata(U.type);

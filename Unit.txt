@@ -14,8 +14,8 @@ Archer
 5 
 Melee 
 20 
-A
-0 
+0
+A 
 ENDUNIT 
 
 Swordsman 
@@ -24,8 +24,8 @@ Swordsman
 5 
 Melee 
 30 
-S
-0 
+0
+S 
 ENDUNIT 
 
 WhiteMage 
@@ -34,6 +34,6 @@ WhiteMage
 5 
 Melee 
 50 
-W
-10 
+10
+W 
 ENDUNIT .

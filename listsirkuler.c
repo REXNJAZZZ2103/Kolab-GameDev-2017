@@ -76,7 +76,7 @@ void InsVFirstList (List *L, Unit X)
 		InsertFirstList(L, P);
 }
 
-void InsVLast (List *L, Unit X)
+void InsVLastList (List *L, Unit X)
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen List di akhir: elemen terakhir yang baru */
@@ -237,27 +237,6 @@ void DelP (List *L, Unit X)
 	}
 }
 
-
-/****************** PROSES SEMUA ELEMEN List ******************/
-// void PrintInfo (List L)
-// /* I.S. List mungkin kosong */
-// /* F.S. Jika List tidak kosong, iai List dicetak ke kanan: [e1,e2,...,en] */
-// /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-// /* Jika List kosong : menulis [] */
-// /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
-// {
-	// address P = FirstList(L);
-	// printf("[");
-	// if(P!=Nil){
-		// while(NextList(P) != FirstList(L)){
-			// printf("%d,", Info(P));
-			// P = NextList(P);
-		// }
-		// printf("%d", Info(P));
-	// }
-	// printf("]");
-// }
-
 void bacaunit(List *stdunit){
 	int i = 1;
 	Unit Utemp;
@@ -288,7 +267,7 @@ void bacaunit(List *stdunit){
 		} else{
 			Utemp.canatk = true;
 			i=1;
-			InsVLast(stdunit, Utemp);
+			InsVLastList(stdunit, Utemp);
 		}
 		ADVKATA(true);
 	}
@@ -305,5 +284,77 @@ void UpdateListMove(List *L, Unit *X, POINT PTujuan) {
 	InfoList(P).pos = PTujuan;
 	InfoList(P).currmove = InfoList(P).currmove - differ;
 
+	(*X).currmove = InfoList(P).currmove;
+
 	(*X).pos = PTujuan;
+}
+
+void TulisListChangeUnit(List L) {
+	address P;
+	int i = 1;
+
+	P = FirstList(L);
+
+	printf("%d. ", i);
+	PrintUnit(InfoList(P));
+	printf("\n");
+
+	P = NextList(P);
+	i++;
+
+	while(P != FirstList(L)) {
+		printf("%d. ", i);
+		PrintUnit(InfoList(P));
+		printf("\n");
+		i++;
+		P = NextList(P);
+	}
+}
+
+void TulisRecruitUnit(List L) {
+	int i = 1;
+
+	address P;
+
+	P = FirstList(L);
+	P = NextList(P);
+
+	printf("%d.", i);
+	PrintUnitRekrut(InfoList(P));
+	printf("\n");
+	i++;
+	P = NextList(P);
+
+	while (P != FirstList(L)) {
+		printf("%d.", i);
+		PrintUnitRekrut(InfoList(P));
+		printf("\n");
+		i++;
+		P = NextList(P);
+	}
+}
+
+void UpdateSelectedUnit(List L, int i, Unit *X) {
+	address P = FirstList(L);
+	int x = 1;
+
+	while(x != i) {
+		P = NextList(P);
+		x++;
+	}
+
+	*X = InfoList(P);
+}
+
+void UpdateRecruit(List L, int i, Unit *SelectedUnitRecruit) {
+	int x = 1;
+	address P = FirstList(L);
+	P = NextList(P);
+
+	while(x != i) {
+		P = NextList(P);
+		x++;
+	}
+
+	*SelectedUnitRecruit = InfoList(P);
 }

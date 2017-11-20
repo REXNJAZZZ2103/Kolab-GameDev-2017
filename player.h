@@ -19,6 +19,6 @@ typedef struct { Kata name;
 #define Income(P) (P).income
 #define Upkeep(P) (P).upkeep
 
-void PrintPlayer(int x, Player Selected);
+void PrintPlayer(Player Selected);
 
 #endif

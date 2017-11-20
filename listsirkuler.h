@@ -63,7 +63,7 @@ void InsVFirstList (List *L, Unit X);
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
-void InsVLast (List *L, Unit X);
+void InsVLastList (List *L, Unit X);
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen List di akhir: elemen terakhir yang baru */
@@ -125,5 +125,9 @@ void DelP (List *L, Unit X);
 
 void bacaunit(List *stdunit);
 void UpdateListMove(List *L, Unit *X, POINT PTujuan);	
+void TulisListChangeUnit(List L);
+void UpdateSelectedUnit(List L, int i, Unit *X);
+void TulisRecruitUnit(List L);
+void UpdateRecruit(List L, int i, Unit *SelectedUnitRecruit);
 
 #endif
