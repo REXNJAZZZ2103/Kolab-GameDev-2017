@@ -31,3 +31,33 @@ boolean IsUnitSama(Unit a, Unit b){
 	   	return false;
 	return true;
 }
+
+void PrintNamaUnit(char X) {
+	if (X == 'A') {
+		printf("Archer\n");
+	} else if (X == 'K') {
+		printf("King\n");
+	} else if (X == 'S') {
+		printf("Swordsman\n");
+	} else if (X == 'W') {
+		printf("White Mage\n");
+	}
+}
+
+void PrintUnitAttack(Unit a, Unit b) {
+	const Kata Range = {" Range", 5};
+	
+	PrintKata(a.type);
+	printf(" ");
+	TulisPOINT(a.pos);
+	printf(" | Health ");
+	printf("%d/%d", a.currhealth, a.maxhealth);
+
+	if (IsKataSama(b.atktype, Range)) {
+		printf(" (Retaliates)");
+	} else {
+		if (IsKataSama(a.atktype, b.atktype)) {
+			printf(" (Retaliates)");
+		}
+	}
+}

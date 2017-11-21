@@ -1,0 +1,1 @@
+gcc main.c unit.c matriks.c player.c map.c point.c stackpoint.c pcolor.c listsirkuler.c mesinkata.c queue.c mesinkar.c -o main -lm

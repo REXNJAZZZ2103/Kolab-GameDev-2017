@@ -156,8 +156,10 @@ void UpdateMoveMAP(MATRIKS *MAP, Unit X, int player) {
     } else if (Elmt(*MAP, P.X, P.Y).kepemilikan != player && Elmt(*MAP, P.X, P.Y).CC != ' ') {
       Found = true;
     } else {
-      Elmt(*MAP, P.X, P.Y).CC = '?';
-      Elmt(*MAP, P.X, P.Y).kepemilikan = 3;
+    	if (Elmt(*MAP, P.X, P.Y).CC == ' ') {
+    		Elmt(*MAP, P.X, P.Y).CC = '?';
+      	Elmt(*MAP, P.X, P.Y).kepemilikan = 3;
+    	}  
     }
   }
 
@@ -172,8 +174,10 @@ void UpdateMoveMAP(MATRIKS *MAP, Unit X, int player) {
     } else if (Elmt(*MAP, P.X, P.Y).kepemilikan != player && Elmt(*MAP, P.X, P.Y).CC != ' ') {
       Found = true;
     } else {
-      Elmt(*MAP, P.X, P.Y).CC = '?';
-      Elmt(*MAP, P.X, P.Y).kepemilikan = 3;
+      if (Elmt(*MAP, P.X, P.Y).CC == ' ') {
+    		Elmt(*MAP, P.X, P.Y).CC = '?';
+      	Elmt(*MAP, P.X, P.Y).kepemilikan = 3;
+    	}  
     }
   }
 
@@ -206,8 +210,10 @@ void UpdateMoveMAP(MATRIKS *MAP, Unit X, int player) {
     } else if (Elmt(*MAP, P.X, P.Y).kepemilikan != player && Elmt(*MAP, P.X, P.Y).CC != ' ') {
       Found = true;
     } else {
-      Elmt(*MAP, P.X, P.Y).CC = '?';
-      Elmt(*MAP, P.X, P.Y).kepemilikan = 3;
+      if (Elmt(*MAP, P.X, P.Y).CC == ' ') {
+    		Elmt(*MAP, P.X, P.Y).CC = '?';
+      	Elmt(*MAP, P.X, P.Y).kepemilikan = 3;
+    	}  
     }
   }    
 }
@@ -216,4 +222,71 @@ void CopyMap(MATRIKS Min, MATRIKS *Mout)
 /*Untuk Mengcopy Map ke suatu Map kosong*/
 {
   CopyMATRIKS(Min, Mout);
+}
+
+void PrintAttack(int i, List L, Unit X, MATRIKS MAP, int PosAttack[], boolean *CantAttack) {
+	POINT Pos;
+	int ke = 1;
+	address ListP;
+
+	if (X.pos.X > 1) {
+		Pos.X = X.pos.X-1;
+		Pos.Y = X.pos.Y;
+		
+		if (Elmt(MAP, AksesMatriksUnit(Pos.X, Pos.Y).X, AksesMatriksUnit(Pos.X, Pos.Y).Y).CC != ' ' && Elmt(MAP, AksesMatriksUnit(Pos.X, Pos.Y).X, AksesMatriksUnit(Pos.X, Pos.Y).Y).kepemilikan != i ) {
+			ListP = SearchPoint(L, Pos);
+			printf("%d. ", ke);
+			PrintUnitAttack(InfoList(ListP), X);
+			(PosAttack)[ke] = 1;
+			ke++;
+			printf("\n");				
+		}
+	}
+
+	if (X.pos.Y > 1) {
+		Pos.X = X.pos.X;
+		Pos.Y = X.pos.Y-1;
+		
+		if (Elmt(MAP, AksesMatriksUnit(Pos.X, Pos.Y).X, AksesMatriksUnit(Pos.X, Pos.Y).Y).CC != ' ' && Elmt(MAP, AksesMatriksUnit(Pos.X, Pos.Y).X, AksesMatriksUnit(Pos.X, Pos.Y).Y).kepemilikan != i ) {
+			ListP = SearchPoint(L, Pos);
+			printf("%d. ", ke);
+			PrintUnitAttack(InfoList(ListP), X);
+			(PosAttack)[ke] = 2;
+			ke++;
+			printf("\n");			
+		}
+	}
+
+	if (X.pos.Y < MAP.NKolEff) {
+		Pos.X = X.pos.X;
+		Pos.Y = X.pos.Y+1;
+		
+		if (Elmt(MAP, AksesMatriksUnit(Pos.X, Pos.Y).X, AksesMatriksUnit(Pos.X, Pos.Y).Y).CC != ' ' && Elmt(MAP, AksesMatriksUnit(Pos.X, Pos.Y).X, AksesMatriksUnit(Pos.X, Pos.Y).Y).kepemilikan != i ) {
+			ListP = SearchPoint(L, Pos);
+			printf("%d. ", ke);
+			PrintUnitAttack(InfoList(ListP), X);
+			(PosAttack)[ke] = 3;
+			ke++;
+			printf("\n");				
+		}
+	}
+
+	if (X.pos.X < MAP.NBrsEff) {
+		Pos.X = X.pos.X+1;
+		Pos.Y = X.pos.Y;
+		
+		if (Elmt(MAP, AksesMatriksUnit(Pos.X, Pos.Y).X, AksesMatriksUnit(Pos.X, Pos.Y).Y).CC != ' ' && Elmt(MAP, AksesMatriksUnit(Pos.X, Pos.Y).X, AksesMatriksUnit(Pos.X, Pos.Y).Y).kepemilikan != i ) {
+			ListP = SearchPoint(L, Pos);
+			printf("%d. ", ke);
+			PrintUnitAttack(InfoList(ListP), X);
+			(PosAttack)[ke] = 4;
+			ke++;
+			printf("\n");				
+		}
+	}
+
+	if (ke == 1) {
+		printf("There's no enemy you can attack\n");
+		*CantAttack = 1;
+	}
 }

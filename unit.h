@@ -44,4 +44,9 @@ void PrintUnit(Unit U);
 
 boolean IsUnitSama(Unit a, Unit b);
 
+void PrintNamaUnit(char X);
+
+void PrintUnitAttack(Unit a, Unit b);
+
+
 #endif

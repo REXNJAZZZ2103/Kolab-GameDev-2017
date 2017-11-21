@@ -225,6 +225,7 @@ void DelP (List *L, Unit X)
 /* List mungkin menjadi kosong karena penghapusan */
 {
 	address P=FirstList(*L);
+
 	if(IsUnitSama(InfoList(P),X)){
 		DelFirstList(L, &P);
 	}
@@ -273,18 +274,24 @@ void bacaunit(List *stdunit){
 	}
 }
 
-void UpdateListMove(List *L, Unit *X, POINT PTujuan) {
+void UpdateListMove(List *L, Unit *X, POINT PTujuan, boolean InVillage) {
 	address P;
 	int differ;
 
 	P = SearchPoint(*L, (*X).pos);
 
-	differ = abs(PTujuan.X - (*X).pos.X) + abs(PTujuan.Y - (*X).pos.Y);
+	if (InVillage) {
+		InfoList(P).currmove = 0;
+		(*X).currmove = 0;
+	} else {
+		differ = abs(PTujuan.X - (*X).pos.X) + abs(PTujuan.Y - (*X).pos.Y);
+
+		InfoList(P).currmove = InfoList(P).currmove - differ;
+		(*X).currmove = InfoList(P).currmove;		
+	}
 
 	InfoList(P).pos = PTujuan;
-	InfoList(P).currmove = InfoList(P).currmove - differ;
-
-	(*X).currmove = InfoList(P).currmove;
+	
 
 	(*X).pos = PTujuan;
 }
@@ -357,4 +364,131 @@ void UpdateRecruit(List L, int i, Unit *SelectedUnitRecruit) {
 	}
 
 	*SelectedUnitRecruit = InfoList(P);
+}
+
+void Reset(List *L) {
+	address P;
+
+	P = FirstList(*L);
+
+	while(NextList(P) != FirstList(*L)) {
+		InfoList(P).currmove = InfoList(P).maxmove;
+		InfoList(P).canatk = true;
+		P = NextList(P);
+	}
+	InfoList(P).currmove = InfoList(P).maxmove;
+	InfoList(P).canatk = true;	
+}
+
+void UpdateUnitAttack(int i, List L, Unit a, Unit *b, boolean *Retaliates) {
+	const Kata Range = {" Range", 5};
+	address P;
+
+	if (i == 1) {
+		POINT PAttack = a.pos;
+		PAttack.X = PAttack.X - 1;
+		P = SearchPoint(L, PAttack);
+
+		*b = InfoList(P);
+	} else if (i == 2) {
+		POINT PAttack = a.pos;
+		PAttack.Y = PAttack.Y - 1;
+		P = SearchPoint(L, PAttack);
+
+		*b = InfoList(P);
+	} else if (i == 3) {
+		POINT PAttack = a.pos;
+		PAttack.Y = PAttack.Y + 1;
+		P = SearchPoint(L, PAttack);
+
+		*b = InfoList(P);
+	} else if (i == 4) {
+		POINT PAttack = a.pos;
+		PAttack.X = PAttack.X + 1;
+		P = SearchPoint(L, PAttack);
+
+		*b = InfoList(P);
+	}
+
+	if (IsKataSama((*b).atktype, Range)) {
+		*Retaliates = true;
+	} else {
+		if (IsKataSama(a.atktype, (*b).atktype)) {
+			*Retaliates = true;
+		} else {
+			*Retaliates = false;
+		}
+	}
+}
+
+void UpdateAttack(int i, List *L, Unit X, List *LAttack, Unit XAttack, boolean Retaliates, MATRIKS *MAP, boolean KingDEAD[]) {
+	address P;
+	POINT PMAP;
+	const Kata King = {" King", 4};
+
+	P = SearchPoint(*LAttack, XAttack.pos);
+	InfoList(P).currhealth -= X.atkdmg;
+
+	if (InfoList(P).currhealth <= 0) {
+		printf("Enemy's ");
+		PrintKata(InfoList(P).type);
+		if (IsKataSama(InfoList(P).type, King)) {
+			KingDEAD[(i%2) + 1] = true;
+		}
+		printf(" is dead ._.\n");
+		PMAP = AksesMatriksUnit(InfoList(P).pos.X, InfoList(P).pos.Y);
+		Elmt(*MAP, PMAP.X, PMAP.Y).CC = ' ';
+		Elmt(*MAP, PMAP.X, PMAP.Y).kepemilikan = 3;
+		DelP(LAttack, InfoList(P));
+	}
+
+	if (Retaliates) {
+		P = SearchPoint(*L, X.pos);
+		InfoList(P).currhealth -= XAttack.atkdmg;
+		InfoList(P).canatk = false;
+		if (InfoList(P).currhealth <= 0) {
+			printf("Your's ");
+			PrintKata(InfoList(P).type);
+			printf(" is dead :(\n");
+			if (IsKataSama(InfoList(P).type, King)) {
+				KingDEAD[i] = true;
+			}
+			PMAP = AksesMatriksUnit(InfoList(P).pos.X, InfoList(P).pos.Y);
+			Elmt(*MAP, PMAP.X, PMAP.Y).CC = ' ';
+			Elmt(*MAP, PMAP.X, PMAP.Y).kepemilikan = 3;
+			DelP(L, InfoList(P));
+		}
+	}
+}
+
+void UpdateUndo(List *L, Stack *S, Unit *X, MATRIKS *MAP) {
+	POINT PUndo;
+	int i;
+	int differ;
+
+	if (IsEmptyStack(*S)) {
+		printf("There is no Undo\n");
+	} else {
+		Pop(S, &PUndo);
+		address P;
+		POINT PMAP;
+
+		differ = abs(PUndo.X - (*X).pos.X) + abs(PUndo.Y - (*X).pos.Y);
+		(*X).currmove += differ;
+
+		PMAP = AksesMatriksUnit((*X).pos.X, (*X).pos.Y);
+
+		Elmt(*MAP, PMAP.X, PMAP.Y).CC = ' ';
+		i = Elmt(*MAP, PMAP.X, PMAP.Y).kepemilikan;
+		Elmt(*MAP, PMAP.X, PMAP.Y).kepemilikan = 3;
+
+		PMAP = AksesMatriksUnit((PUndo).X, (PUndo).Y);
+		Elmt(*MAP, PMAP.X, PMAP.Y).CC = (*X).simbol;
+		Elmt(*MAP, PMAP.X, PMAP.Y).kepemilikan = i;
+
+		P = SearchPoint(*L, (*X).pos);
+		InfoList(P).pos = PUndo;
+		InfoList(P).currmove += differ;
+		(*X).pos = PUndo; 
+	}
 }

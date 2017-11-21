@@ -39,8 +39,8 @@ void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl)
 POINT AksesMatriksUnit(int a, int b) {
     POINT P;
 
-    P.X = 2+(a-1)*4;
-    P.Y = 2+(b-1)*4;
+    P.X = 2+(a)*4;
+    P.Y = 2+(b)*4;
 
     return P;
 }

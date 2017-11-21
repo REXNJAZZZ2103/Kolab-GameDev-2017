@@ -8,6 +8,8 @@
 #include "boolean.h"
 #include "unit.h"
 #include "mesinkata.h"
+#include "stackpoint.h"
+#include "matriks.h"
 
 #define Nil NULL
 
@@ -124,10 +126,14 @@ void DelP (List *L, Unit X);
 // /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
 
 void bacaunit(List *stdunit);
-void UpdateListMove(List *L, Unit *X, POINT PTujuan);	
+void UpdateListMove(List *L, Unit *X, POINT PTujuan, boolean InVillage);	
 void TulisListChangeUnit(List L);
 void UpdateSelectedUnit(List L, int i, Unit *X);
 void TulisRecruitUnit(List L);
 void UpdateRecruit(List L, int i, Unit *SelectedUnitRecruit);
+void Reset(List *L);
+void UpdateUnitAttack(int i, List L, Unit a, Unit *b, boolean *Retaliates);
+void UpdateAttack(int i, List *L, Unit X, List *LAttack, Unit XAttack, boolean Retaliates, MATRIKS *MAP, boolean KingDEAD[]);
+void UpdateUndo(List *L, Stack *S, Unit *X, MATRIKS *MAP);
 
 #endif

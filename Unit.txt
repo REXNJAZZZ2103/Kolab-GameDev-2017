@@ -1,6 +1,6 @@
 King 
 100 
-5 
+100 
 5 
 Melee 
 0 
@@ -12,7 +12,7 @@ Archer
 100 
 5 
 5 
-Melee 
+Range 
 20 
 0
 A 
