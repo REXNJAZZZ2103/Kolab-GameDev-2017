@@ -34,13 +34,60 @@ const Kata Move = {" MOVE", 4};
 const Kata Undo = {" UNDO", 4};
 const Kata EndT = {" ENDTURN", 7};
 const Kata Exit = {" EXIT", 4};
+const Kata Help = {" HELP", 4};
 
 MATRIKS MAPASLI;
 MATRIKS MAPCOPY;
 
 int main()
 {
-	puts("BATTLE OF OLYMPIA");
+puts("                 ___           ___           ___           ___           ___       ___                           ");           
+puts("                /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\__\\     /\\  \\              "); 
+puts("               /::\\  \\       /::\\  \\        \\:\\  \\        \\:\\  \\       /:/  /    /::\\  \\   ");
+puts("              /:/\\:\\  \\     /:/\\:\\  \\        \\:\\  \\        \\:\\  \\     /:/  /    /:/\\:\\  \\  ");
+puts("             /::\\~\\:\\__\\   /::\\~\\:\\  \\       /::\\  \\       /::\\  \\   /:/  /    /::\\~\\:\\  \\ ");
+puts("            /:/\\:\\ \\:|__| /:/\\:\\ \\:\\__\\     /:/\\:\\__\\     /:/\\:\\__\\ /:/__/    /:/\\:\\ \\:\\__\\");
+puts("            \\:\\~\\:\\/:/  / \\/__\\:\\/:/  /    /:/  \\/__/    /:/  \\/__/ \\:\\  \\    \\:\\~\\:\\ \\/__/");
+puts("             \\:\\ \\::/  /       \\::/  /    /:/  /        /:/  /       \\:\\  \\    \\:\\ \\:\\__\\  ");
+puts("              \\:\\/:/  /        /:/  /     \\/__/         \\/__/         \\:\\  \\    \\:\\ \\/__/  ");
+puts("               \\::/__/        /:/  /                                   \\:\\__\\    \\:\\__\\    ");
+puts("                ~~            \\/__/                                     \\/__/     \\/__/    ");
+puts("                                           ___           ___     ");
+puts("                                          /\\  \\         /\\  \\    ");
+puts("                                         /::\\  \\       /::\\  \\   ");
+puts("                                        /:/\\:\\  \\     /:/\\:\\  \\  ");
+puts("                                       /:/  \\:\\  \\   /::\\~\\:\\  \\ ");
+puts("                                      /:/__/ \\:\\__\\ /:/\\:\\ \\:\\__\\");
+puts("                                      \\:\\  \\ /:/  / \\/__\\:\\ \\/__/");
+puts("                                       \\:\\  /:/  /       \\:\\__\\  ");
+puts("                                        \\:\\/:/  /         \\/__/  ");
+puts("                                         \\::/  /                 ");
+puts("                                          \\/__/                  ");
+puts("           ___           ___       ___           ___           ___                       ___     ");
+puts("          /\\  \\         /\\__\\     |\\__\\         /\\__\\         /\\  \\          ___        /\\  \\    ");
+puts("         /::\\  \\       /:/  /     |:|  |       /::|  |       /::\\  \\        /\\  \\      /::\\  \\   ");
+puts("        /:/\\:\\  \\     /:/  /      |:|  |      /:|:|  |      /:/\\:\\  \\       \\:\\  \\    /:/\\:\\  \\  ");
+puts("       /:/  \\:\\  \\   /:/  /       |:|__|__   /:/|:|__|__   /::\\~\\:\\  \\      /::\\__\\  /::\\~\\:\\  \\ ");
+puts("      /:/__/ \\:\\__\\ /:/__/        /::::\\__\\ /:/ |::::\\__\\ /:/\\:\\ \\:\\__\\  __/:/\\/__/ /:/\\:\\ \\:\\__\\");
+puts("      \\:\\  \\ /:/  / \\:\\  \\       /:/~~/~    \\/__/~~/:/  / \\/__\\:\\/:/  / /\\/:/  /    \\/__\\:\\/:/  /");
+puts("       \\:\\  /:/  /   \\:\\  \\     /:/  /            /:/  /       \\::/  /  \\::/__/          \\::/  / ");
+puts("        \\:\\/:/  /     \\:\\  \\    \\/__/            /:/  /         \\/__/    \\:\\__\\          /:/  /  ");
+puts("         \\::/  /       \\:\\__\\                   /:/  /                    \\/__/         /:/  /   ");
+puts("          \\/__/         \\/__/                   \\/__/                                   \\/__/    ");
+puts("");
+puts("");
+puts("Command : ");
+puts("HELP : Untuk melihat command apa saja yang dapat dilakukan");
+puts("MOVE : Untuk Memindahkan Unit yang telah dipilih");
+puts("RECRUIT : Untuk membeli unit baru");
+puts("CHANGE_UNIT : Untuk merubah Unit yang mau dipilih");
+puts("ATTACK : Untuk menyerang unit lawan disekitarnya");
+puts("INFO : Untuk melihat info village dan unit di suatu petak");
+puts("ENDTURN : Untuk berhenti turn player");
+puts("UNDO : Untuk mengembalikan unit di posisi sebelumnya");
+puts("MAP : Untuk melihat kondisi map");
+puts("");
+
 	puts("1. New Game");
 	puts("2. Load Game");
 	printf("Masukkan pilihan : ");
@@ -412,6 +459,19 @@ int main()
 					EndTurn = true;
 				} else if (IsKataSama(pilihan, Undo)) {
 					UpdateUndo(&ListUnitPlayer[PlayerKe],  &MoveUndo, &SelectedUnit[PlayerKe], &MAPASLI);
+				} else if (IsKataSama(pilihan, Help)) {
+					puts("");
+					puts("Command : ");
+					puts("HELP : Untuk melihat command apa saja yang dapat dilakukan");
+					puts("MOVE : Untuk Memindahkan Unit yang telah dipilih");
+					puts("RECRUIT : Untuk membeli unit baru");
+					puts("CHANGE_UNIT : Untuk merubah Unit yang mau dipilih");
+					puts("ATTACK : Untuk menyerang unit lawan disekitarnya");
+					puts("INFO : Untuk melihat info village dan unit di suatu petak");
+					puts("ENDTURN : Untuk berhenti turn player");
+					puts("UNDO : Untuk mengembalikan unit di posisi sebelumnya");
+					puts("MAP : Untuk melihat kondisi map");
+					puts("");					
 				} else {
 					printf("\n");
 					printf("MASUKAN SALAH\n");
