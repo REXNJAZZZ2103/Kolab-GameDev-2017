@@ -3,22 +3,7 @@
 #include <stdio.h>
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
-/* *** Konstruktor membentuk MATRIKS *** */
-void MakeMATRIKS (int NB, int NK, MATRIKS *M)
-/* Membentuk sebuah MATRIKS "kosong" yang siap diisi berukuran NB x NK di "ujung kiri" memori */
-/* I.S. NB dan NK adalah valid untuk memori matriks yang dibuat */
-/* F.S. Matriks M sesuai dengan definisi di atas terbentuk */
-{
-    NBrsEff(*M) = NB;
-    NKolEff(*M) = NK;
-}
 
-/* *** Selektor "DUNIA MATRIKS" *** */
-boolean IsIdxValid (int i, int j)
-/* Mengirimkan true jika i, j adalah indeks yang valid untuk matriks apa pun */
-{
-    return(((i>=BrsMin)&&(i<=BrsMax))&&((j>=KolMin)&&(j<=KolMax)));
-}
 /* *** Selektor: Untuk sebuah matriks M yang terdefinisi: *** */
 
 /* ********** Assignment  MATRIKS ********** */
@@ -45,7 +30,7 @@ POINT AksesMatriksUnit(int a, int b) {
     return P;
 }
 
-void Reset(MATRIKS *JARAK, int Baris, int Kolom) {
+void ResetMatriks(MATRIKS *JARAK, int Baris, int Kolom) {
     for(int i = 0; i <= Baris; i++) {
         for(int j = 0; j <= Kolom; j++) {
             Elmt(*JARAK, i, j).kepemilikan = 0;
