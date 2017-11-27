@@ -9,9 +9,15 @@
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define BrsMin 1
-#define BrsMax 100
+#define BrsMax 500
 #define KolMin 1
-#define KolMax 100
+#define KolMax 500
+
+/* *** Selektor *** */
+#define NBrsEff(M) (M).NBrsEff
+#define NKolEff(M) (M).NKolEff
+#define Elmt(M,i,j) (M).Mem[(i)][(j)]
+
 
 typedef int indeks; /* indeks baris, kolom */
 //typedef char ElType;
@@ -31,10 +37,6 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M);
 /* I.S. NB dan NK adalah valid untuk memori matriks yang dibuat */
 /* F.S. Matriks M sesuai dengan definisi di atas terbentuk */
 
-/* *** Selektor *** */
-#define NBrsEff(M) (M).NBrsEff
-#define NKolEff(M) (M).NKolEff
-#define Elmt(M,i,j) (M).Mem[(i)][(j)]
 
 /* *** Selektor "DUNIA MATRIKS" *** */
 boolean IsIdxValid (int i, int j);
@@ -45,5 +47,7 @@ void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl);
 /* Melakukan assignment MHsl  MIn */
 
 POINT AksesMatriksUnit(int a, int b);
+
+void Reset(MATRIKS *JARAK, int Baris, int Kolom);
 
 #endif

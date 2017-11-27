@@ -44,3 +44,11 @@ POINT AksesMatriksUnit(int a, int b) {
 
     return P;
 }
+
+void Reset(MATRIKS *JARAK, int Baris, int Kolom) {
+    for(int i = 0; i <= Baris; i++) {
+        for(int j = 0; j <= Kolom; j++) {
+            Elmt(*JARAK, i, j).kepemilikan = 0;
+        }
+    }
+}
