@@ -138,6 +138,7 @@ void UpdateAttack(int i, List *L, Unit X, List *LAttack, Unit XAttack, boolean R
     }
 
     if (InfoList(P).currhealth <= 0) {
+        miss[2] = true;
         printf("Enemy's ");
         PrintKata(InfoList(P).type);
         if (IsKataSama(InfoList(P).type, King)) {
