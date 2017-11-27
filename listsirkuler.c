@@ -440,7 +440,7 @@ void UpdateUnitAttack(int i, List L, Unit a, Unit *b, boolean *Retaliates) {
 	}
 }
 
-void UpdateUndo(List *L, Stack *S, Unit *X, MATRIKS *MAP) {
+void UpdateUndo(List *L, Stack *S, Unit *X, MATRIKS *MAP, MATRIKS JARAK) {
 	POINT PUndo;
 	int i;
 	int differ;
@@ -451,8 +451,14 @@ void UpdateUndo(List *L, Stack *S, Unit *X, MATRIKS *MAP) {
 		Pop(S, &PUndo);
 		address P;
 		POINT PMAP;
+		POINT PUndoMap;
 
-		differ = abs(PUndo.X - (*X).pos.X) + abs(PUndo.Y - (*X).pos.Y);
+		PUndoMap = AksesMatriksUnit(PUndo.X, PUndo.Y);
+		PMAP = AksesMatriksUnit((*X).pos.X, (*X).pos.Y);
+
+		printf("%d %d\n", Elmt(JARAK, PMAP.X, PMAP.Y).kepemilikan, Elmt(JARAK, PUndoMap.X, PUndoMap.Y).kepemilikan);
+
+		differ = abs(Elmt(JARAK, PMAP.X, PMAP.Y).kepemilikan - Elmt(JARAK, PUndoMap.X, PUndoMap.Y).kepemilikan);
 		(*X).currmove += differ;
 
 		PMAP = AksesMatriksUnit((*X).pos.X, (*X).pos.Y);

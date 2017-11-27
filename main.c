@@ -490,7 +490,7 @@ puts("");
 					Main = false;
 					EndTurn = true;
 				} else if (IsKataSama(pilihan, Undo)) {
-					UpdateUndo(&ListUnitPlayer[PlayerKe],  &MoveUndo, &SelectedUnit[PlayerKe], &MAPASLI);
+					UpdateUndo(&ListUnitPlayer[PlayerKe],  &MoveUndo, &SelectedUnit[PlayerKe], &MAPASLI, JARAK);
 					printf("\n");
 				} else if (IsKataSama(pilihan, Help)) {
 					puts("");
