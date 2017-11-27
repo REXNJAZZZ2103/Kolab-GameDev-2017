@@ -1,0 +1,36 @@
+
+void UpdateMage(List *L, MATRIKS MAP, int i, int BarisR, int KolomR)
+
+
+void UpdateMage(List *L, MATRIKS MAP, int PlayerKe, int BarisR, int KolomR) {
+	const Kata Mage = {" WhiteMage", 9};
+
+	address P;
+	address SampingMage;
+	POINT Po;
+	POINT PMAP;
+
+	P = FirstList(*L);
+
+	P = NextList(P);
+
+	while(P != FirstList(*L)) {
+		if (IsKataSama(InfoList(P).type, Mage)) {
+			if (InfoList(P).pos.X > 0) {
+				Po.X = InfoList(P).pos.X-1;
+				Po.Y = InfoList(P).pos.Y;
+
+				PMAP = AksesMatriksUnit(Po.X, Po.Y);
+
+				if (Elmt(MAP, PMAP.X, PMAP.Y).kepemilikan == PlayerKe) {
+					SampingMage = SearchPoint(*L, Po);
+
+					
+				}
+			}
+		}
+	}
+}
+
+
+UpdateMage(&ListUnitPlayer[PlayerKe], MAPASLI, PlayerKe, int BarisR, int KolomR);

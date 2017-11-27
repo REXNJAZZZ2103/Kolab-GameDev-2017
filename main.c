@@ -22,6 +22,12 @@ int villageX;
 int villageY;
 boolean KingDEAD[3] = {false};
 POINT Pvillage;
+boolean FindNextUnit = false;
+MATRIKS MAPASLI;
+MATRIKS MAPCOPY;
+MATRIKS JARAK;
+int missatk;
+boolean miss[3];
 
 const Kata Recruit = {" RECRUIT", 7};
 const Kata Change_Unit = {" CHANGE_UNIT", 11};
@@ -36,8 +42,7 @@ const Kata EndT = {" ENDTURN", 7};
 const Kata Exit = {" EXIT", 4};
 const Kata Help = {" HELP", 4};
 
-MATRIKS MAPASLI;
-MATRIKS MAPCOPY;
+
 
 int main()
 {
@@ -107,8 +112,6 @@ puts("");
 			banyakvillage = 2;
 		}
 
-		banyakvillage /= 2;
-
 		int getvillage = 0;
 
 		while(getvillage != banyakvillage) {
@@ -166,6 +169,9 @@ puts("");
 	while(Main) {
 		EndTurn = false;
 		Del(&PlayerTurn, &SelectedPlayer);
+
+		UpdateMage(&ListUnitPlayer[PlayerKe], MAPASLI, PlayerKe, BarisR, KolomR);
+
 		for(int i = 1; i <= 2; i++) {
 			SelectedUnit[i] = InfoList(FirstList(ListUnitPlayer[i]));
 		}
@@ -192,7 +198,7 @@ puts("");
 			if (!IsKataSama(pilihan, EndT)) {
 				if (IsKataSama(pilihan, Move)) {
 					CopyMap(MAPASLI, &MAPCOPY);
-					UpdateMoveMAP(&MAPCOPY, SelectedUnit[PlayerKe], PlayerKe);
+					UpdateMoveMAP(&MAPCOPY, &JARAK, SelectedUnit[PlayerKe], PlayerKe, BarisR, KolomR);
 					
 					int TujuanX, TujuanY;
 					POINT PTujuan, PAsal;
@@ -226,14 +232,13 @@ puts("");
 						
 						if (Elmt(MAPASLI, PTujuan.X - 1, PTujuan.Y).CC == 'V' && Elmt(MAPASLI, PTujuan.X-1, PTujuan.Y).kepemilikan != PlayerKe) {
 							if (Elmt(MAPASLI, PTujuan.X-1, PTujuan.Y).kepemilikan != 3) {
-								printf("HAI\n");
 								Add(&PlayerTurn, SelectedPlayer);
 								Del(&PlayerTurn, &SelectedPlayer);
 								SelectedPlayer.income -= 10;
 								Add(&PlayerTurn, SelectedPlayer);
 								Del(&PlayerTurn, &SelectedPlayer);
-								CreateEmptyStack(&MoveUndo);
 							}
+							CreateEmptyStack(&MoveUndo);
 							Elmt(MAPASLI, PTujuan.X-1, PTujuan.Y).kepemilikan = PlayerKe;
 							SelectedPlayer.income += 10;
 							InVillage = true;
@@ -242,7 +247,7 @@ puts("");
 						PTujuan.X = TujuanX;
 						PTujuan.Y = TujuanY;
 
-						UpdateListMove(&ListUnitPlayer[PlayerKe], &SelectedUnit[PlayerKe], PTujuan, InVillage);
+						UpdateListMove(&ListUnitPlayer[PlayerKe], &SelectedUnit[PlayerKe], PTujuan, InVillage, JARAK);
 						
 						printf("\n");						
 					}			
@@ -314,7 +319,7 @@ puts("");
 
 							InsVLastList(&ListUnitPlayer[PlayerKe], SelectedUnitRecruit);
 							SelectedPlayer.gold -= SelectedUnitRecruit.cost;
-							SelectedPlayer.upkeep += SelectedUnitRecruit.cost;
+							SelectedPlayer.upkeep += SelectedUnitRecruit.upkeepcost;
 
 							Elmt(MAPASLI, SelectRecruitMAP.X, SelectRecruitMAP.Y).CC = SelectedUnitRecruit.simbol;
 							Elmt(MAPASLI, SelectRecruitMAP.X, SelectRecruitMAP.Y).kepemilikan = PlayerKe;
@@ -357,34 +362,33 @@ puts("");
 						printf("There's no Unit here\n");
 					} else if (Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).CC == 'A') {
 						printf("Archer\n");
-						if (Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan == 2) {
+						if (Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan != 4) {
 							printf("Owned by Player %d\n", Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan);
 						} else {
-							printf("Owned by Player %d\n", Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan);
+							printf("Owned by Player %d\n", PlayerKe);
 						}
 					} else if (Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).CC == 'K') {
 						printf("King\n");
-						if (Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan == 2) {
+						if (Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan != 4) {
 							printf("Owned by Player %d\n", Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan);
 						} else {
-							printf("Owned by Player %d\n", Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan);
+							printf("Owned by Player %d\n", PlayerKe);
 						}
 					} else if (Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).CC == 'S') {
 						printf("Swordsman\n");
-						if (Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan == 2) {
+						if (Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan != 4) {
 							printf("Owned by Player %d\n", Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan);
 						} else {
-							printf("Owned by Player %d\n", Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan);
+							printf("Owned by Player %d\n", PlayerKe);
 						}
 					} else if (Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).CC == 'W') {
 						printf("White Mage\n");
-						if (Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan == 2) {
+						if (Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan != 4) {
 							printf("Owned by Player %d\n", Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan);
 						} else {
-							printf("Owned by Player %d\n", Elmt(MAPASLI, SelectedInfoMap.X, SelectedInfoMap.Y).kepemilikan);
+							printf("Owned by Player %d\n", PlayerKe);
 						}
 					}
-
 					printf("\n");
 				} else if (IsKataSama(pilihan, Attack)) {
 					int pilihanAttack;
@@ -398,7 +402,10 @@ puts("");
 						PrintKata(SelectedUnit[PlayerKe].type);
 						printf("'s cannot attack\n");
 					} else {
-						PrintAttack(PlayerKe, ListUnitPlayer[(PlayerKe%2)+1], SelectedUnit[PlayerKe], MAPASLI, PosAttack, &CantAttack);
+						miss[1] = false;
+						miss[2] = false;
+
+						PrintAttack(PlayerKe, ListUnitPlayer[(PlayerKe%2)+1], SelectedUnit[PlayerKe], MAPASLI, PosAttack, &CantAttack, BarisR, KolomR);
 
 						if (!CantAttack) {
 							printf("Select enemy you want to attack : ");
@@ -406,23 +413,42 @@ puts("");
 
 							UpdateUnitAttack(PosAttack[pilihanAttack], ListUnitPlayer[(PlayerKe%2)+1], SelectedUnit[PlayerKe], &SelectedUnitAttack, &Retaliates);
 
-							printf("Enemy's ");
-							PrintKata(SelectedUnitAttack.type);
-							printf(" is damaged by ");
-							printf("%d.\n", SelectedUnit[PlayerKe].atkdmg);
+							missatk = rand()%100;
+							if (missatk <= SelectedUnitAttack.misschance) {
+								printf("Your's ");
+								PrintKata(SelectedUnit[PlayerKe].type);
+								printf(" miss the attack\n");
+								miss[1] = true;
+							} else {
+								printf("Enemy's ");
+								PrintKata(SelectedUnitAttack.type);
+								printf(" is damaged by ");
+								printf("%d.\n", SelectedUnit[PlayerKe].atkdmg);
+							}
+
+							
 							if (Retaliates) {
+								missatk = rand()%100;
 								printf("Enemy's ");
 								PrintKata(SelectedUnitAttack.type);
 								printf(" retaliates.\n");
-								
-								printf("Your ");
-								PrintKata(SelectedUnit[PlayerKe].type);
-								printf(" is damaged by ");
-								printf("%d.\n", SelectedUnitAttack.atkdmg);
+								if (missatk <= SelectedUnit[PlayerKe].misschance) {
+									printf("Enemy's ");
+									PrintKata(SelectedUnit[PlayerKe].type);
+									printf(" miss the attack\n");
+									miss[2] = true;
+								} else {				
+									printf("Your ");
+									PrintKata(SelectedUnit[PlayerKe].type);
+									printf(" is damaged by ");
+									printf("%d.\n", SelectedUnitAttack.atkdmg);	
+								}
 							}
-							UpdateAttack(PlayerKe, &ListUnitPlayer[PlayerKe], SelectedUnit[PlayerKe], &ListUnitPlayer[(PlayerKe%2)+1], SelectedUnitAttack, Retaliates, &MAPASLI, KingDEAD);
+							UpdateAttack(PlayerKe, &ListUnitPlayer[PlayerKe], SelectedUnit[PlayerKe], &ListUnitPlayer[(PlayerKe%2)+1], SelectedUnitAttack, Retaliates, &MAPASLI, KingDEAD, &PlayerTurn, &SelectedPlayer, miss);
 
 							if (KingDEAD[PlayerKe]) {
+								printf("\n");
+
 								PrintKata(SelectedPlayer.name);
 								printf("'s King is Dead\n");
 								Main = false;
@@ -430,11 +456,11 @@ puts("");
 
 								Add(&PlayerTurn, SelectedPlayer);
 								Del(&PlayerTurn, &SelectedPlayer);
-								SelectedPlayer.income -= 10;
 								printf("Congratulation ");
 								PrintKata(SelectedPlayer.name);
 								printf("\n");	
-							} else {
+							} else if (KingDEAD[PlayerKe%2 + 1]) {
+								printf("\n");
 								Add(&PlayerTurn, SelectedPlayer);
 								Del(&PlayerTurn, &SelectedPlayer);
 								PrintKata(SelectedPlayer.name);
@@ -442,9 +468,10 @@ puts("");
 								Main = false;
 								EndTurn = true;
 
+								printf("\n");
+
 								Add(&PlayerTurn, SelectedPlayer);
 								Del(&PlayerTurn, &SelectedPlayer);
-								SelectedPlayer.income -= 10;
 								printf("Congratulation ");
 								PrintKata(SelectedPlayer.name);
 								printf("\n");
@@ -453,12 +480,13 @@ puts("");
 							SelectedUnit[PlayerKe].canatk = false;
 							CreateEmptyStack(&MoveUndo);
 						}							
-					}			
+					} 		
 				} else if (IsKataSama(pilihan, Exit)) {
 					Main = false;
 					EndTurn = true;
 				} else if (IsKataSama(pilihan, Undo)) {
 					UpdateUndo(&ListUnitPlayer[PlayerKe],  &MoveUndo, &SelectedUnit[PlayerKe], &MAPASLI);
+					printf("\n");
 				} else if (IsKataSama(pilihan, Help)) {
 					puts("");
 					puts("Command : ");
@@ -472,6 +500,11 @@ puts("");
 					puts("UNDO : Untuk mengembalikan unit di posisi sebelumnya");
 					puts("MAP : Untuk melihat kondisi map");
 					puts("");					
+				} else if (IsKataSama(pilihan, Next_Unit)) {
+					UpdateNextUnit(&SelectedUnit[PlayerKe], &FindNextUnit, ListUnitPlayer[PlayerKe]);
+					if (!FindNextUnit) {
+						printf("There is no Unit with Movement Point or Can Attack\n");
+					}
 				} else {
 					printf("\n");
 					printf("MASUKAN SALAH\n");

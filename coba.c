@@ -1,11 +1,14 @@
-#include "listsirkuler.h"
-#include "unit.h"
 #include <stdio.h>
-#include "queue.h"
+#include <stdlib.h>
 
 int main()
 {
-	Queue ListPlayer;
+	int x;
 
-	BacaPlayer(&ListPlayer);
+	for(int i = 1; i <= 1000; i++) {
+		x = rand()%100;
+
+		printf("%d\n", x);		
+	}
+	
 }

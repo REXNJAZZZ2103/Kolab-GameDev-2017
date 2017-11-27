@@ -63,5 +63,6 @@ void Del (Queue *Q, Player *X);
 void Turn(Queue *Q, Player *X);
 
 void BacaPlayer(Queue *Q);
+void UpdateAttack(int i, List *L, Unit X, List *LAttack, Unit XAttack, boolean Retaliates, MATRIKS *MAP, boolean KingDEAD[], Queue *PlayerTurn, Player *Selected, boolean miss[]);
 
 #endif

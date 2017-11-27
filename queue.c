@@ -125,3 +125,57 @@ void BacaPlayer(Queue *Q){
         ADVKATA(true);
     }
 }
+
+void UpdateAttack(int i, List *L, Unit X, List *LAttack, Unit XAttack, boolean Retaliates, MATRIKS *MAP, boolean KingDEAD[], Queue *PlayerTurn, Player *Selected, boolean miss[]) {
+    address P;
+    POINT PMAP;
+    const Kata King = {" King", 4};
+
+    P = SearchPoint(*LAttack, XAttack.pos);
+
+    if (!miss[1]) {
+        InfoList(P).currhealth -= X.atkdmg;        
+    }
+
+    if (InfoList(P).currhealth <= 0) {
+        printf("Enemy's ");
+        PrintKata(InfoList(P).type);
+        if (IsKataSama(InfoList(P).type, King)) {
+            KingDEAD[(i%2) + 1] = true;
+        }
+        printf(" is dead ._.\n");
+        PMAP = AksesMatriksUnit(InfoList(P).pos.X, InfoList(P).pos.Y);
+        Elmt(*MAP, PMAP.X, PMAP.Y).CC = ' ';
+        Elmt(*MAP, PMAP.X, PMAP.Y).kepemilikan = 3;
+        DelP(LAttack, InfoList(P));
+        Add(PlayerTurn, *Selected);
+        Del(PlayerTurn, Selected);
+        (*Selected).upkeep -= InfoList(P).upkeepcost;
+        Add(PlayerTurn, *Selected);
+        Del(PlayerTurn, Selected);
+    }
+
+    if (Retaliates) {
+        P = SearchPoint(*L, X.pos);
+        
+        if (!miss[2]) {
+            InfoList(P).currhealth -= XAttack.atkdmg;
+        }
+
+        InfoList(P).canatk = false;
+        if (InfoList(P).currhealth <= 0) {
+            printf("Your's ");
+            PrintKata(InfoList(P).type);
+            printf(" is dead :(\n");
+            if (IsKataSama(InfoList(P).type, King)) {
+                KingDEAD[i] = true;
+            }
+            PMAP = AksesMatriksUnit(InfoList(P).pos.X, InfoList(P).pos.Y);
+            Elmt(*MAP, PMAP.X, PMAP.Y).CC = ' ';
+
+            Elmt(*MAP, PMAP.X, PMAP.Y).kepemilikan = 3;
+            DelP(L, InfoList(P));
+            (*Selected).upkeep -= InfoList(P).upkeepcost;
+        }
+    }
+}

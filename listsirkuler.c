@@ -224,21 +224,31 @@ void DelP (List *L, Unit X)
 /* Jika tidak ada elemen List dengan Info(P)=X, maka List tetap */
 /* List mungkin menjadi kosong karena penghapusan */
 {
-	address P=FirstList(*L);
+	address P= SearchPoint(*L, X.pos);
 
-	if(IsUnitSama(InfoList(P),X)){
-		DelFirstList(L, &P);
-	}
-	else if(NextList(P)!=FirstList(*L)){
-		while(IsUnitSama(InfoList(NextList(P)),X) && NextList(P)!=FirstList(*L)){
-			P = NextList(P);
+	if (P != Nil) {
+		if (P == FirstList(*L)) {
+			DelFirstList(L, &P);
+		} else if (NextList(P) == FirstList(*L)) {
+			DelLast(L, &P);
+		} else {
+			address Prec;
+			Prec = FirstList(*L);
+
+			while(NextList(Prec) != P) {
+				Prec = NextList(Prec);
+			}
+			P = NextList(Prec);
+			NextList(Prec) = NextList(P);
+			NextList(P) = Nil;
 		}
-		if(IsUnitSama(InfoList(NextList(P)),X))
-			NextList(P) = NextList(NextList(P));
 	}
+
 }
 
 void bacaunit(List *stdunit){
+	const Kata King = {" King", 4};
+
 	int i = 1;
 	Unit Utemp;
 	STARTKATA(true, FUnit);
@@ -253,7 +263,11 @@ void bacaunit(List *stdunit){
 				case 3 : Utemp.atkdmg = KatatoBilangan(CKata);
 						 break;
 				case 4 : Utemp.maxmove = KatatoBilangan(CKata);
-						 Utemp.currmove = Utemp.maxmove;
+						 if (IsKataSama(Utemp.type, King)) {
+						 	Utemp.currmove = Utemp.maxmove;
+						 } else {
+						 	Utemp.currmove = 0;
+						 }	 
 						 break;
 				case 5 : Utemp.atktype = CKata;
 						 break;
@@ -263,6 +277,12 @@ void bacaunit(List *stdunit){
 						 break;
 				case 8 : Utemp.simbol = CKata.TabKata[1];
 						 break;
+				case 9 : Utemp.upkeepcost = KatatoBilangan(CKata);
+						 break;
+				case 10 : Utemp.deff = KatatoBilangan(CKata);
+						  break;
+				case 11 : Utemp.misschance = KatatoBilangan(CKata);
+						  break;
 			}
 			i++;
 		} else{
@@ -274,19 +294,18 @@ void bacaunit(List *stdunit){
 	}
 }
 
-void UpdateListMove(List *L, Unit *X, POINT PTujuan, boolean InVillage) {
+void UpdateListMove(List *L, Unit *X, POINT PTujuan, boolean InVillage, MATRIKS Jarak) {
 	address P;
-	int differ;
-
+	POINT PMAP;
 	P = SearchPoint(*L, (*X).pos);
 
 	if (InVillage) {
 		InfoList(P).currmove = 0;
 		(*X).currmove = 0;
 	} else {
-		differ = abs(PTujuan.X - (*X).pos.X) + abs(PTujuan.Y - (*X).pos.Y);
+		PMAP = AksesMatriksUnit(PTujuan.X, PTujuan.Y);
+		InfoList(P).currmove = InfoList(P).currmove - Elmt(Jarak, PMAP.X, PMAP.Y).kepemilikan;
 
-		InfoList(P).currmove = InfoList(P).currmove - differ;
 		(*X).currmove = InfoList(P).currmove;		
 	}
 
@@ -421,46 +440,6 @@ void UpdateUnitAttack(int i, List L, Unit a, Unit *b, boolean *Retaliates) {
 	}
 }
 
-void UpdateAttack(int i, List *L, Unit X, List *LAttack, Unit XAttack, boolean Retaliates, MATRIKS *MAP, boolean KingDEAD[]) {
-	address P;
-	POINT PMAP;
-	const Kata King = {" King", 4};
-
-	P = SearchPoint(*LAttack, XAttack.pos);
-	InfoList(P).currhealth -= X.atkdmg;
-
-	if (InfoList(P).currhealth <= 0) {
-		printf("Enemy's ");
-		PrintKata(InfoList(P).type);
-		if (IsKataSama(InfoList(P).type, King)) {
-			KingDEAD[(i%2) + 1] = true;
-		}
-		printf(" is dead ._.\n");
-		PMAP = AksesMatriksUnit(InfoList(P).pos.X, InfoList(P).pos.Y);
-		Elmt(*MAP, PMAP.X, PMAP.Y).CC = ' ';
-		Elmt(*MAP, PMAP.X, PMAP.Y).kepemilikan = 3;
-		DelP(LAttack, InfoList(P));
-	}
-
-	if (Retaliates) {
-		P = SearchPoint(*L, X.pos);
-		InfoList(P).currhealth -= XAttack.atkdmg;
-		InfoList(P).canatk = false;
-		if (InfoList(P).currhealth <= 0) {
-			printf("Your's ");
-			PrintKata(InfoList(P).type);
-			printf(" is dead :(\n");
-			if (IsKataSama(InfoList(P).type, King)) {
-				KingDEAD[i] = true;
-			}
-			PMAP = AksesMatriksUnit(InfoList(P).pos.X, InfoList(P).pos.Y);
-			Elmt(*MAP, PMAP.X, PMAP.Y).CC = ' ';
-			Elmt(*MAP, PMAP.X, PMAP.Y).kepemilikan = 3;
-			DelP(L, InfoList(P));
-		}
-	}
-}
-
 void UpdateUndo(List *L, Stack *S, Unit *X, MATRIKS *MAP) {
 	POINT PUndo;
 	int i;
@@ -490,5 +469,109 @@ void UpdateUndo(List *L, Stack *S, Unit *X, MATRIKS *MAP) {
 		InfoList(P).pos = PUndo;
 		InfoList(P).currmove += differ;
 		(*X).pos = PUndo; 
+	}
+}
+
+void UpdateMage(List *L, MATRIKS MAP, int PlayerKe, int BarisR, int KolomR) {
+	const Kata Mage = {" WhiteMage", 9};
+
+	address P;
+	address SampingMage;
+	POINT Po;
+	POINT PMAP;
+
+	P = FirstList(*L);
+
+	P = NextList(P);
+
+	while(P != FirstList(*L)) {
+		if (IsKataSama(InfoList(P).type, Mage)) {
+			if (InfoList(P).pos.X > 0) {
+				Po.X = InfoList(P).pos.X-1;
+				Po.Y = InfoList(P).pos.Y;
+
+				PMAP = AksesMatriksUnit(Po.X, Po.Y);
+
+				if (Elmt(MAP, PMAP.X, PMAP.Y).kepemilikan == PlayerKe) {
+					SampingMage = SearchPoint(*L, Po);
+					if (InfoList(P).heal + InfoList(SampingMage).currhealth > InfoList(SampingMage).maxhealth) {
+						InfoList(SampingMage).currhealth = InfoList(SampingMage).maxhealth;
+					} else {
+						InfoList(SampingMage).currhealth += InfoList(P).heal;
+					}
+				}
+			}
+
+			if (InfoList(P).pos.Y > 0) {
+				Po.X = InfoList(P).pos.X;
+				Po.Y = InfoList(P).pos.Y-1;
+
+				PMAP = AksesMatriksUnit(Po.X, Po.Y);
+
+				if (Elmt(MAP, PMAP.X, PMAP.Y).kepemilikan == PlayerKe) {
+					SampingMage = SearchPoint(*L, Po);
+					if (InfoList(P).heal + InfoList(SampingMage).currhealth > InfoList(SampingMage).maxhealth) {
+						InfoList(SampingMage).currhealth = InfoList(SampingMage).maxhealth;
+					} else {
+						InfoList(SampingMage).currhealth += InfoList(P).heal;
+					}
+				}
+			}
+
+			if (InfoList(P).pos.X < BarisR - 1) {
+				Po.X = InfoList(P).pos.X+1;
+				Po.Y = InfoList(P).pos.Y;
+
+				PMAP = AksesMatriksUnit(Po.X, Po.Y);
+
+				if (Elmt(MAP, PMAP.X, PMAP.Y).kepemilikan == PlayerKe) {
+					SampingMage = SearchPoint(*L, Po);
+					if (InfoList(P).heal + InfoList(SampingMage).currhealth > InfoList(SampingMage).maxhealth) {
+						InfoList(SampingMage).currhealth = InfoList(SampingMage).maxhealth;
+					} else {
+						InfoList(SampingMage).currhealth += InfoList(P).heal;
+					}
+				}
+			}
+
+			if (InfoList(P).pos.Y < KolomR - 1) {
+				Po.X = InfoList(P).pos.X;
+				Po.Y = InfoList(P).pos.Y+1;
+
+				PMAP = AksesMatriksUnit(Po.X, Po.Y);
+
+				if (Elmt(MAP, PMAP.X, PMAP.Y).kepemilikan == PlayerKe) {
+					SampingMage = SearchPoint(*L, Po);
+					if (InfoList(P).heal + InfoList(SampingMage).currhealth > InfoList(SampingMage).maxhealth) {
+						InfoList(SampingMage).currhealth = InfoList(SampingMage).maxhealth;
+					} else {
+						InfoList(SampingMage).currhealth += InfoList(P).heal;
+					}
+				}
+			}
+		}
+
+		P = NextList(P);
+	}
+}
+
+
+void UpdateNextUnit(Unit *S, boolean *F, List L) {
+	address P;
+	address FindP;
+
+	*F = false;
+
+	P = SearchPoint(L, (*S).pos);
+
+	FindP = NextList(P);
+
+	while(FindP != P && !(*F)) {
+		if (InfoList(FindP).currmove > 0 || InfoList(FindP).canatk) {
+			*F = true;
+			*S  = InfoList(FindP);
+		} else {
+			FindP = NextList(FindP);
+		}
 	}
 }

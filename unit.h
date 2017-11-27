@@ -16,6 +16,9 @@ typedef struct{
 	int heal;
 	int cost;
 	char simbol;
+	int upkeepcost;
+	int deff;
+	int misschance;
 	POINT pos;
 } Unit;
 

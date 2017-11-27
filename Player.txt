@@ -1,11 +1,11 @@
 Habibi
-10
+300
 0
 0
 EndPlayer
 
 Thareq
-10
+300
 0
 0
 EndPlayer

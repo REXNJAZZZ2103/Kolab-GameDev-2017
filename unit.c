@@ -3,7 +3,7 @@
 
 void PrintUnitRekrut(Unit U){
 	PrintKata(U.type);
-	printf(" | Health %d | ATK %d | %dG", U.maxhealth, U.atkdmg,U.cost);
+	printf(" | Health %d | ATK %d | DEF %d | %dG", U.maxhealth, U.atkdmg,U.deff, U.cost);
 }
 
 void PrintMove(Unit U){
@@ -47,11 +47,11 @@ void PrintNamaUnit(char X) {
 void PrintUnitAttack(Unit a, Unit b) {
 	const Kata Range = {" Range", 5};
 	
-	PrintKata(a.type);
+	PrintKata(b.type);
 	printf(" ");
-	TulisPOINT(a.pos);
+	TulisPOINT(b.pos);
 	printf(" | Health ");
-	printf("%d/%d", a.currhealth, a.maxhealth);
+	printf("%d/%d", b.currhealth, b.maxhealth);
 
 	if (IsKataSama(b.atktype, Range)) {
 		printf(" (Retaliates)");
