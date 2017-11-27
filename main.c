@@ -481,6 +481,7 @@ puts("");
 
 								Add(&PlayerTurn, SelectedPlayer);
 								Del(&PlayerTurn, &SelectedPlayer);
+								puts("");
 								printf("Congratulation ");
 								PrintKata(SelectedPlayer.name);
 								printf("\n");	
@@ -510,6 +511,15 @@ puts("");
 				} else if (IsKataSama(pilihan, Exit)) {
 					Main = false;
 					EndTurn = true;
+
+					puts("_____________________ ___________   ___.  ");
+					puts("\\_   _____/\\____    / \\__    ___/_ _\\_ |__   ____   ______");
+					puts(" |    __)_   /     /    |    | |  |  \\ __ \\_/ __ \\ /  ___/");
+					puts(" |        \\ /     /_    |    | |  |  / \\_\\ \\  ___/ \\___ \\ ");
+					puts("/_______  //_______ \\   |____| |____/|___  /\\___  >____  >");
+					puts("        \\/         \\/                    \\/     \\/     \\/"); 
+					puts("");
+
 				} else if (IsKataSama(pilihan, Undo)) {
 					UpdateUndo(&ListUnitPlayer[PlayerKe],  &MoveUndo, &SelectedUnit[PlayerKe], &MAPASLI, JARAK);
 					printf("\n");

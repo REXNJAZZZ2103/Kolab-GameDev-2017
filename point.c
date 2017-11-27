@@ -39,3 +39,41 @@ boolean NEQ (POINT P1, POINT P2)
 {	//Algoritma
 	return !EQ(P1, P2);
 }
+
+/* *** KELOMPOK OPERASI LAIN TERHADAP TYPE *** */                           
+POINT NextX (POINT P)
+/* Mengirim salinan P dengan absis ditambah satu */
+{	//Algoritma
+	Absis(P)+=1;
+	return P;
+}
+
+POINT NextY (POINT P)
+/* Mengirim salinan P dengan ordinat ditambah satu */
+{	//Algoritma
+	Ordinat(P)+=1;
+	return P;
+}
+
+POINT PlusDelta (POINT P, int deltaX, int deltaY)
+/* Mengirim salinan P yang absisnya adalah Absis(P) + deltaX dan ordinatnya adalah Ordinat(P) + deltaY */
+{	//Algoritma
+	Absis(P)+=deltaX;
+	Ordinat(P)+=deltaY;
+	return P;
+}
+
+int Panjang (POINT P1, POINT P2)
+/* Menghitung jarak antara 2 titik yaitu tiik P1 dan titik P2 */
+{	//Kamus
+	float Jx=Absis(P1)-Absis(P2), Jy=Ordinat(P1)-Ordinat(P2);
+	//Algoritma
+	return abs(Jx) + abs(Jy);
+}
+
+void Geser (POINT *P, int deltaX, int deltaY)
+/* I.S. P terdefinisi */
+/* F.S. P digeser, absisnya sebesar deltaX dan ordinatnya sebesar deltaY */
+{	//Algoritma
+	*P = PlusDelta(*P, deltaX, deltaY);
+}
