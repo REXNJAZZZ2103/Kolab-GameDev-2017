@@ -133,7 +133,7 @@ void TulisRecruitUnit(List L);
 void UpdateRecruit(List L, int i, Unit *SelectedUnitRecruit);
 void Reset(List *L);
 void UpdateUnitAttack(int i, List L, Unit a, Unit *b, boolean *Retaliates);
-void UpdateUndo(List *L, Stack *S, Unit *X, MATRIKS *MAP);
+void UpdateUndo(List *L, Stack *S, Unit *X, MATRIKS *MAP, MATRIKS JARAK);
 void UpdateMage(List *L, MATRIKS MAP, int i, int BarisR, int KolomR);
 void UpdateNextUnit(Unit *S, boolean *F, List L);
 
