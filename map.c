@@ -156,8 +156,6 @@ void UpdateMoveMAP(MATRIKS *MAP, MATRIKS *Jarak, Unit X, int player, int BarisR,
 
   PMAP = AksesMatriksUnit(Now.X, Now.Y);
   
-  Elmt(*Jarak, PMAP.X, PMAP.Y).kepemilikan = 0;
-
   while(!IsEmptyQueuePoint(bfs)) {
 
     DelPoint(&bfs, &Now);
@@ -166,7 +164,7 @@ void UpdateMoveMAP(MATRIKS *MAP, MATRIKS *Jarak, Unit X, int player, int BarisR,
 
     jaraknow = Elmt(*Jarak, PMAP.X, PMAP.Y).kepemilikan;
 
-    if (Elmt(*Jarak, PMAP.X, PMAP.Y).kepemilikan < X.currmove) {
+    if (Elmt(*Jarak, PMAP.X, PMAP.Y).kepemilikan < X.maxmove) {
       if (Now.X > 0) {
         PMAP = AksesMatriksUnit(Now.X-1, Now.Y);
         if (Elmt(*MAP, PMAP.X, PMAP.Y).CC == ' ' || Elmt(*MAP, PMAP.X, PMAP.Y).kepemilikan == player) {
