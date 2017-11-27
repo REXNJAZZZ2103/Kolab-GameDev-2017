@@ -293,6 +293,7 @@ puts("");
 
 						SelectRecruit = MakePOINT(SelectRecruitX, SelectRecruitY);
 						SelectRecruitMAP = AksesMatriksUnit(SelectRecruit.X, SelectRecruit.Y);
+						
 						while(Elmt(MAPASLI, SelectRecruitMAP.X, SelectRecruitMAP.Y).CC != ' ' || Elmt(MAPASLI, SelectRecruitMAP.X-1, SelectRecruitMAP.Y).CC != 'C' || Elmt(MAPASLI, SelectRecruitMAP.X - 1, SelectRecruitMAP.Y).kepemilikan != PlayerKe) {
 							printf("WRONG INPUT MAP\n");
 							printf("\n");
@@ -311,6 +312,7 @@ puts("");
 						scanf("%d", &NoRecruit);
 
 						UpdateRecruit(ListUnitAwal, NoRecruit, &SelectedUnitRecruit);
+
 						if (SelectedPlayer.gold < SelectedUnitRecruit.cost) {
 							printf("You dont have money\n");
 						} else {
@@ -323,6 +325,9 @@ puts("");
 
 							Elmt(MAPASLI, SelectRecruitMAP.X, SelectRecruitMAP.Y).CC = SelectedUnitRecruit.simbol;
 							Elmt(MAPASLI, SelectRecruitMAP.X, SelectRecruitMAP.Y).kepemilikan = PlayerKe;
+							printf("You have recruited an ");
+							PrintKata(SelectedUnitRecruit.type);
+							printf("\n");
 							printf("\n");	
 						}					
 					}		
