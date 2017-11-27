@@ -439,6 +439,9 @@ puts("");
 							UpdateUnitAttack(PosAttack[pilihanAttack], ListUnitPlayer[(PlayerKe%2)+1], SelectedUnit[PlayerKe], &SelectedUnitAttack, &Retaliates);
 
 							missatk = rand()%100;
+
+							puts("");
+
 							if (missatk <= SelectedUnitAttack.misschance) {
 								printf("Your's ");
 								PrintKata(SelectedUnit[PlayerKe].type);
@@ -459,7 +462,7 @@ puts("");
 								printf(" retaliates.\n");
 								if (missatk <= SelectedUnit[PlayerKe].misschance) {
 									printf("Enemy's ");
-									PrintKata(SelectedUnit[PlayerKe].type);
+									PrintKata(SelectedUnitAttack.type);
 									printf(" miss the attack\n");
 									miss[2] = true;
 								} else {				
@@ -469,6 +472,9 @@ puts("");
 									printf("%d.\n", SelectedUnitAttack.atkdmg);	
 								}
 							}
+
+							puts("");
+
 							UpdateAttack(PlayerKe, &ListUnitPlayer[PlayerKe], SelectedUnit[PlayerKe], &ListUnitPlayer[(PlayerKe%2)+1], SelectedUnitAttack, Retaliates, &MAPASLI, KingDEAD, &PlayerTurn, &SelectedPlayer, miss);
 
 							if (KingDEAD[PlayerKe]) {
@@ -512,12 +518,18 @@ puts("");
 					Main = false;
 					EndTurn = true;
 
-					puts("_____________________ ___________   ___.  ");
-					puts("\\_   _____/\\____    / \\__    ___/_ _\\_ |__   ____   ______");
-					puts(" |    __)_   /     /    |    | |  |  \\ __ \\_/ __ \\ /  ___/");
-					puts(" |        \\ /     /_    |    | |  |  / \\_\\ \\  ___/ \\___ \\ ");
-					puts("/_______  //_______ \\   |____| |____/|___  /\\___  >____  >");
-					puts("        \\/         \\/                    \\/     \\/     \\/"); 
+					puts("___________.__                   __               _____             ");
+					puts("\\__    ___/|  |__ _____    ____ |  | __  ______ _/ ____\\___________ ");
+					puts("  |    |   |  |  \\\\__  \\  /    \\|  |/ / /  ___/ \\   __\\/  _ \\_  __ \\");
+					puts("  |    |   |   Y  \\/ __ \\|   |  \\    <  \\___ \\   |  | (  <_> )  | \\/");
+					puts("  |____|   |___|  (____  /___|  /__|_ \\/____  >  |__|  \\____/|__|   ");
+					puts("                \\/     \\/     \\/     \\/     \\/                      ");
+					puts("__________.__                .__                ");
+					puts("\\______   \\  | _____  ___.__.|__| ____    ____  ");
+					puts(" |     ___/  | \\__  \\<   |  ||  |/    \\  / ___\\ ");
+					puts(" |    |   |  |__/ __ \\\\___  ||  |   |  \\/ /_/  >");
+					puts(" |____|   |____(____  / ____||__|___|  /\\___  / ");
+					puts("                    \\/\\/             \\//_____/  ");
 					puts("");
 
 				} else if (IsKataSama(pilihan, Undo)) {
@@ -539,7 +551,22 @@ puts("");
 				} else if (IsKataSama(pilihan, Next_Unit)) {
 					UpdateNextUnit(&SelectedUnit[PlayerKe], &FindNextUnit, ListUnitPlayer[PlayerKe]);
 					if (!FindNextUnit) {
+						printf("\n");
 						printf("There is no Unit with Movement Point or Can Attack\n");
+						printf("\n");
+					} else {
+						if (PlayerKe == 1) {
+							Elmt(MAPASLI, PSelected.X, PSelected.Y).kepemilikan = 1;
+						} else {
+							Elmt(MAPASLI, PSelected.X, PSelected.Y).kepemilikan = 2;
+						}
+
+						printf("You are now selected ");
+						PrintKata(SelectedUnit[PlayerKe].type);
+						CreateEmptyStack(&MoveUndo);
+						ResetMatriks(&JARAK, Baris, Kolom);
+						printf("\n");
+						printf("\n");
 					}
 				} else {
 					printf("\n");
@@ -557,6 +584,7 @@ puts("");
 					PlayerKe = 1;
 				}
 				EndTurn = true;
+				puts("");
 			}
 		}
 	}
