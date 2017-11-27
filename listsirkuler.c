@@ -297,14 +297,17 @@ void bacaunit(List *stdunit){
 void UpdateListMove(List *L, Unit *X, POINT PTujuan, boolean InVillage, MATRIKS Jarak) {
 	address P;
 	POINT PMAP;
+	POINT PAwalMap;
 	P = SearchPoint(*L, (*X).pos);
+
+	PAwalMap = AksesMatriksUnit((*X).pos.X, (*X).pos.Y);
 
 	if (InVillage) {
 		InfoList(P).currmove = 0;
 		(*X).currmove = 0;
 	} else {
 		PMAP = AksesMatriksUnit(PTujuan.X, PTujuan.Y);
-		InfoList(P).currmove = InfoList(P).currmove - Elmt(Jarak, PMAP.X, PMAP.Y).kepemilikan;
+		InfoList(P).currmove = InfoList(P).currmove - (abs(Elmt(Jarak, PMAP.X, PMAP.Y).kepemilikan - Elmt(Jarak, PAwalMap.X, PAwalMap.Y).kepemilikan));
 
 		(*X).currmove = InfoList(P).currmove;		
 	}
@@ -455,8 +458,6 @@ void UpdateUndo(List *L, Stack *S, Unit *X, MATRIKS *MAP, MATRIKS JARAK) {
 
 		PUndoMap = AksesMatriksUnit(PUndo.X, PUndo.Y);
 		PMAP = AksesMatriksUnit((*X).pos.X, (*X).pos.Y);
-
-		printf("%d %d\n", Elmt(JARAK, PMAP.X, PMAP.Y).kepemilikan, Elmt(JARAK, PUndoMap.X, PUndoMap.Y).kepemilikan);
 
 		differ = abs(Elmt(JARAK, PMAP.X, PMAP.Y).kepemilikan - Elmt(JARAK, PUndoMap.X, PUndoMap.Y).kepemilikan);
 		(*X).currmove += differ;

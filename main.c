@@ -179,6 +179,9 @@ puts("");
 		SelectedPlayer.gold += SelectedPlayer.income;
 		SelectedPlayer.gold -= SelectedPlayer.upkeep;
 
+		CreateEmptyStack(&MoveUndo);
+		ResetMatriks(&JARAK, Baris, Kolom);
+
 		while(!EndTurn) {
 			PrintPlayer(SelectedPlayer);
 			
@@ -199,7 +202,7 @@ puts("");
 				if (IsKataSama(pilihan, Move)) {
 					CopyMap(MAPASLI, &MAPCOPY);
 					UpdateMoveMAP(&MAPCOPY, &JARAK, SelectedUnit[PlayerKe], PlayerKe, BarisR, KolomR);
-					
+
 					int TujuanX, TujuanY;
 					POINT PTujuan, PAsal;
 					boolean InVillage = false;
@@ -239,6 +242,7 @@ puts("");
 								Del(&PlayerTurn, &SelectedPlayer);
 							}
 							CreateEmptyStack(&MoveUndo);
+							ResetMatriks(&JARAK, Baris, Kolom);
 							Elmt(MAPASLI, PTujuan.X-1, PTujuan.Y).kepemilikan = PlayerKe;
 							SelectedPlayer.income += 10;
 							InVillage = true;
@@ -272,6 +276,7 @@ puts("");
 					printf("You are now selected ");
 					PrintKata(SelectedUnit[PlayerKe].type);
 					CreateEmptyStack(&MoveUndo);
+					ResetMatriks(&JARAK, Baris, Kolom);
 					printf("\n");
 					printf("\n");
 				} else if (IsKataSama(pilihan, Recruit)) {
@@ -484,6 +489,7 @@ puts("");
 
 							SelectedUnit[PlayerKe].canatk = false;
 							CreateEmptyStack(&MoveUndo);
+							ResetMatriks(&JARAK, Baris, Kolom);
 						}							
 					} 		
 				} else if (IsKataSama(pilihan, Exit)) {
